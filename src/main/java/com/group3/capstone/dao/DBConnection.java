@@ -21,7 +21,11 @@ public class DBConnection {
 		
 		try {
 	        	//load driver class
-	        	Class.forName("com.mysql.jdbc.Driver");
+			
+// Driver below saved for testing:
+//	        	Class.forName("com.mysql.jdbc.Driver");
+	    		Class.forName("com.mysql.cj.jdbc.Driver");
+			
 	        	System.out.println("MySql JDBC Driver Registered!");
 	        	
 	        	//get hold of driver manager
