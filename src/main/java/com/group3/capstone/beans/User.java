@@ -12,14 +12,30 @@ public abstract class User {
 	private BufferedImage avatar;
 	private String email;
 	private String password;
-	private Role role; // SignedUserRole? 
+	//private Role role; // SignedUserRole? 
 	
 	/**
 	 * Constructors here
 	 */
+	//constructor
+	public User() {
+		this.userID = UUID.randomUUID();
+	}
+	
+	public User(String first, String last, String userName, String password, String email) {
+		this.firstName = first;
+		this.lastName = last;
+		this.userName = userName;
+		this.password = password;
+		this.email = email;
+		this.userID = UUID.randomUUID();
+	}
 	
 	public UUID getUserID() {
 		return userID;
+	}
+	public void setUserID() {
+		this.userID = UUID.randomUUID();
 	}
 	public void setUserID(UUID userID) {
 		this.userID = userID;
@@ -53,7 +69,17 @@ public abstract class User {
 	}
 	public void setPassword(String password) {
 		this.password = password;
-	} 
+	}
+	public void setEmail(String email2) {
+		// TODO Auto-generated method stub
+		
+	}
+	public String getEmail() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
 	
 	/**
 	 * 'role' getters and setters
