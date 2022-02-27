@@ -3,6 +3,7 @@ package com.group3.capstone.servlets;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.UUID;
 
 import javax.servlet.ServletException;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.group3.capstone.beans.AdminRole;
 import com.group3.capstone.beans.SignedUserRole;
 import com.group3.capstone.beans.User;
+import com.group3.capstone.dao.ApplicationDao;
 
 /**
  * Servlet implementation class RegisterServlet
@@ -27,7 +29,6 @@ public class RegisterServlet extends HttpServlet {
      */
     public RegisterServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -35,7 +36,8 @@ public class RegisterServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String page = getHTMLString(request.getServletContext().getRealPath("/register.html"));
+		//String page = getHTMLString(request.getServletContext().getRealPath("/register.html"));
+		String page = getHTMLString(request.getServletContext().getRealPath("/login.html"));
 		response.getWriter().write(page);
 	}
 
@@ -56,36 +58,49 @@ public class RegisterServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
 		
 		User user = null;
 		
-		String firstName = request.getParameter("first_name");
-		String lastName = request.getParameter("last_name");
+//		String firstName = request.getParameter("first_name");
+//		String lastName = request.getParameter("last_name");
 		String userName = request.getParameter("username");
 		String password = request.getParameter("password");
-		String email = request.getParameter("ac_email");
+//		String email = request.getParameter("ac_email");
+//		
+		user = new User();
 		
-		user = new SignedUserRole();
 		
-		System.out.println(firstName);
 		
-		user.setFirstName(firstName);
-		user.setLastName(lastName);
+//		user.setFirstName(firstName);
+//		user.setLastName(lastName);
 		user.setPassword(password);
 		user.setUserName(userName);
-		user.setUserID();
-		UUID test = user.getUserID();
-		user.setEmail(email);
+//		user.setUserID();
+//		UUID test = user.getUserID();
+//		user.setEmail(email);
 
+
+		ApplicationDao AdminRole = new ApplicationDao();
 		
-		//to interact with DB create admin role to create new user
-		AdminRole Boss = new AdminRole();
+//		AdminRole.createUser(user);
 		
-		Boss.createUser(user);
+		boolean permissionGranted = AdminRole.readUser(userName, password);
 		
+		if (permissionGranted) {
+			System.out.println("User authentication approved");
+			String page = getHTMLString(request.getServletContext().getRealPath("/dashboard.html"));
+			response.getWriter().write(page);
+		}
+		else {
+			System.out.println("Access Denied");
+			String page = getHTMLString(request.getServletContext().getRealPath("/login.html"));
+			//ideally would like alert to user to try again
+			PrintWriter writer = response.getWriter();
+			writer.write(page);
+		}
 		
-		doGet(request, response);
+		//doGet(request, response);
 	}
 
 }
