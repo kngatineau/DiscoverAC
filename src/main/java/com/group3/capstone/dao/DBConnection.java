@@ -9,7 +9,7 @@ public class DBConnection {
 	public static Connection getConnectionToDatabase() {
 	        
 		Connection connection = null;
-		private static final String dbName = "";
+		private static final String dbName = "DiscoverAc";
 		
 		private static final String dbUrl = "jdbc:mysql://cst8288test.mysql.database.azure.com:3306/"
 										+ dbName +"?useSSL=true&requireSSL=false";
