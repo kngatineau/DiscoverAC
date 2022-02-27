@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import com.group3.capstone.beans.Bulletin;
 import com.group3.capstone.beans.Post;
@@ -14,59 +15,64 @@ import com.group3.capstone.services.ApplicationService;
 
 public class ApplicationDao implements ApplicationService {
 	
-	//see entire AC Bulletin
-	@Override
-	public Map<Integer, Bulletin> readACBulletin() {
-		
-		Bulletin bulletin = null;
-		Map<Integer, Bulletin> posts = new LinkedHashMap<Integer, Bulletin>();
-		
-		try {
-			//get connection to DB
-			Connection connection = DBConnection.getConnectionToDatabase();
-			
-			//write select query
-			String sql = "select * from bulletins;";
-			PreparedStatement statement = connection.prepareStatement(sql);
-			
-			//execute query
-			ResultSet set = statement.executeQuery();
-			while (set.next()) {
-				bulletin = new Bulletin();
-				bulletin.setBulletinID(set.getInt("bulletinID"));
-				bulletin.setBulletinName(set.getString("bulletinName"));
-				//put each set into list 
-				posts.put(bulletin.getBulletinID(), bulletin);
-				
-			}
-		}catch (SQLException exception) {
-			exception.printStackTrace();	
-		}
-		return posts;
-	}
+	private Connection connection = null;
+
+	// Make connection upon DAO instantiation.
+    public ApplicationDao() {
+    	this.connection = DBConnection.getConnectionToDatabase();;
+
+    }
+// Commented out for future use.
+//
+//	//see entire AC Bulletin
+//	@Override
+//	public Map<Integer, Bulletin> readACBulletin() {
+//		
+//		Bulletin bulletin = null;
+//		Map<Integer, Bulletin> posts = new LinkedHashMap<Integer, Bulletin>();
+//		
+//		try {
+//			//write select query
+//			String sql = "select * from bulletin;";
+//			PreparedStatement statement = connection.prepareStatement(sql);
+//			
+//			//execute query
+//			ResultSet set = statement.executeQuery();
+//			while (set.next()) {
+//				bulletin = new Bulletin();
+//				bulletin.setBulletinID(set.getInt("bulletinId"));
+//				bulletin.setBulletinName(set.getString("bulletinName"));
+//				//put each set into list 
+//				posts.put(bulletin.getBulletinID(), bulletin);
+//				
+//			}
+//		}catch (SQLException exception) {
+//			exception.printStackTrace();	
+//		}
+//		return posts;
+//	}
 	
 	//view a single bulletins registry
 	@Override
-	public List<Post> readBulletin(int bulletinID) {
+	public List<Post> readBulletin(UUID bulletinID) {
 		
 		Bulletin bulletin = null;
 		List<Post> postRegistry = null;
 		
 		try {
-			//get connection to DB
-			Connection connection = DBConnection.getConnectionToDatabase();
-			
 			//write select query
-			String sql = "select * from bulletins where id=?";
+			String sql = "select * from bulletin where bulletinId = " + bulletinID.toString();
+			
+			// HJ: Wondering if the below prepareStatement will be superceded by JSP approach.
 			PreparedStatement statement = connection.prepareStatement(sql);
 			//set to id given in parameter
-			statement.setInt(1, bulletinID);
+			statement.setString(1, bulletinID.toString());
 			
 			//execute query
 			ResultSet set = statement.executeQuery();
 			while (set.next()) {
 				bulletin = new Bulletin();
-				bulletin.setBulletinID(set.getInt("bulletinID"));
+				bulletin.setBulletinID(UUID.fromString(set.getString("bulletinID")));
 				bulletin.setBulletinName(set.getString("bulletinName"));
 				//use method from Bulletin to show registry
 			}
