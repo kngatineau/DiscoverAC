@@ -10,10 +10,12 @@ public class GuestRole {
 	// these methods may not return void
 	
 	public boolean signUp() {
+		return false;
 		
 	}
 	
 	public boolean signIn() {
+		return false;
 		
 	}
 
