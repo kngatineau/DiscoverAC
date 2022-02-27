@@ -123,11 +123,11 @@ public boolean readUser(String x, String y) {
 	String sql = "SELECT * FROM user WHERE username=? AND password=?;";
 	try {
 		PreparedStatement statement = connection.prepareStatement(sql);
-		statement.setString(0, x);
-		statement.setString(1, y);
+		statement.setString(1, x);
+		statement.setString(2, y);
 		
 		ResultSet set = statement.executeQuery();
-		if (set != null) {
+		if (set.next()) {
 			match = true;
 		}
 		
