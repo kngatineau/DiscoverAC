@@ -14,6 +14,14 @@ import com.group3.capstone.services.ApplicationService;
 
 public class ApplicationDao implements ApplicationService {
 	
+	private Connection connection = null;
+
+	// Make connection upon DAO instantiation.
+    public ApplicationDao() {
+    	this.connection = DBConnection.getConnectionToDatabase();;
+
+    }
+	
 	//see entire AC Bulletin
 	@Override
 	public Map<Integer, Bulletin> readACBulletin() {
@@ -22,9 +30,6 @@ public class ApplicationDao implements ApplicationService {
 		Map<Integer, Bulletin> posts = new LinkedHashMap<Integer, Bulletin>();
 		
 		try {
-			//get connection to DB
-			Connection connection = DBConnection.getConnectionToDatabase();
-			
 			//write select query
 			String sql = "select * from bulletins;";
 			PreparedStatement statement = connection.prepareStatement(sql);
@@ -53,9 +58,6 @@ public class ApplicationDao implements ApplicationService {
 		List<Post> postRegistry = null;
 		
 		try {
-			//get connection to DB
-			Connection connection = DBConnection.getConnectionToDatabase();
-			
 			//write select query
 			String sql = "select * from bulletins where id=?";
 			PreparedStatement statement = connection.prepareStatement(sql);
