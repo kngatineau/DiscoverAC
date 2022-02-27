@@ -1,1 +1,4 @@
+# Ignore files in the java build path:
 /build/
+# Ignore MySQL backup files:
+*.mwb.bak

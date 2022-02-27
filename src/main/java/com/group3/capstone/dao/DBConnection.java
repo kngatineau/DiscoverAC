@@ -9,12 +9,12 @@ public class DBConnection {
 	public static Connection getConnectionToDatabase() {
 	        
 		Connection connection = null;
-		private static final String dbName = "";
+		private static final String dbName = "DiscoverAc";
 		
-		private static final String dbUrl = "jdbc:mysql://cst8288test.mysql.database.azure.com:3306/"
+		private static final String dbUrl = "jdbc:mysql://cst8288capstone.mysql.database.azure.com:3306/"
 										+ dbName +"?useSSL=true&requireSSL=false";
 		
-	    private static final String dbUser = "Group7@cst8288test";
+	    private static final String dbUser = "Group3@cst8288capstone";
 	    private static final String dbPassword = "AlgonquinCP2022Winter";
 	        
 		System.out.println("Attempting to connect to database.");
