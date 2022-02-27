@@ -117,8 +117,8 @@ public class ApplicationDao implements ApplicationService {
 	
 	
 	//all CRUD operations for USER table
-	
-public boolean readUser(String x, String y) {
+	//method to verify if user is in database of registered users
+	public boolean readUser(String x, String y) {
 	boolean match = false;
 	String sql = "SELECT * FROM user WHERE username=? AND password=?;";
 	try {
@@ -139,8 +139,6 @@ public boolean readUser(String x, String y) {
 	
 	public User createUser(User user) {
 		try {
-			//get connection to DB
-			Connection connection = DBConnection.getConnectionToDatabase();
 			//write insert query for new user
 			String sql = "INSERT INTO user (firstName, lastName, userName, password, email, userId) values (?,?,?,?,?,?);";
 			PreparedStatement statement = connection.prepareStatement(sql);
@@ -149,24 +147,16 @@ public boolean readUser(String x, String y) {
 			statement.setString(2, user.getUserName() );
 			statement.setString(3, user.getPassword());
 			statement.setString(4, user.getEmail());
-			
 			//get UUID as string to pass to DB
 			UUID string = user.getUserID();
 			String uuiD = string.toString();
-			
 			statement.setString(5,  uuiD);
 			
-			//execute query and update result set
 			statement.execute();
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
-			
 		}
 		return user;
-	
-
-}
-
-	
+	}	
 }

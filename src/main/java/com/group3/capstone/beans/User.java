@@ -71,12 +71,10 @@ public class User {
 		this.password = password;
 	}
 	public void setEmail(String email2) {
-		// TODO Auto-generated method stub
 		
 	}
 	public String getEmail() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.email;
 	}
 	
 	

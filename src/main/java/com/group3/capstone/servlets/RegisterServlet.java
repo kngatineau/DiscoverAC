@@ -61,17 +61,12 @@ public class RegisterServlet extends HttpServlet {
 		
 		
 		User user = null;
-		
 //		String firstName = request.getParameter("first_name");
 //		String lastName = request.getParameter("last_name");
 		String userName = request.getParameter("username");
 		String password = request.getParameter("password");
-//		String email = request.getParameter("ac_email");
-//		
+//		String email = request.getParameter("ac_email");		
 		user = new User();
-		
-		
-		
 //		user.setFirstName(firstName);
 //		user.setLastName(lastName);
 		user.setPassword(password);
@@ -79,7 +74,6 @@ public class RegisterServlet extends HttpServlet {
 //		user.setUserID();
 //		UUID test = user.getUserID();
 //		user.setEmail(email);
-
 
 		ApplicationDao AdminRole = new ApplicationDao();
 		
@@ -95,7 +89,7 @@ public class RegisterServlet extends HttpServlet {
 		else {
 			System.out.println("Access Denied");
 			String page = getHTMLString(request.getServletContext().getRealPath("/login.html"));
-			//ideally would like alert to user to try again
+			//ideally would like alert to user to try again 
 			PrintWriter writer = response.getWriter();
 			writer.write(page);
 		}

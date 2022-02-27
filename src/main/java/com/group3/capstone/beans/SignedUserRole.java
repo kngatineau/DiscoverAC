@@ -1,7 +1,7 @@
 package com.group3.capstone.beans;
 
 //made concrete to test inserting users to database
-public class SignedUserRole extends User {
+public class SignedUserRole {
 //public abstract class SignedUserRole {
 	
 	private boolean verifiedUser;

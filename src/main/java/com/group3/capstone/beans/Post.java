@@ -16,21 +16,25 @@ public class Post {
 	 */
 	
 	private String postAuthor() {
+		return postAuthor;
 		
 	}
 	
 	private Date postDate() {
+		return postDate;
 		
 	}
 	
 	// 'discordLink in UML'
 	private String addDiscordLink() {
-		
+		return discordLink;
+			
 	}
 	
 	
 	// 'descriptionText' in UML
 	private String addDescription() {
+		return descriptionText;
 		
 	}
 
