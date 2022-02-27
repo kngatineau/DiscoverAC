@@ -1,13 +1,14 @@
 package com.group3.capstone.beans;
 
 import java.util.List;
+import java.util.UUID;
 
 public class Bulletin {
 	
-	private int bulletinID;
+	private UUID bulletinID;
 	private String bulletinName;
 	private String bulletinDescription;
-	private int parentBulletinID;
+	private UUID parentBulletinID;
 	private List<Integer> checkBulletinID;
 	private List<Post> postRegistry;
 	
@@ -17,12 +18,12 @@ public class Bulletin {
 	}
 
 
-	public int getBulletinID() {
+	public UUID getBulletinID() {
 		return bulletinID;
 	}
 
 
-	public void setBulletinID(int bulletinID) {
+	public void setBulletinID(UUID bulletinID) {
 		this.bulletinID = bulletinID;
 	}
 
@@ -47,12 +48,12 @@ public class Bulletin {
 	}
 
 
-	public int getParentBulletinID() {
+	public UUID getParentBulletinID() {
 		return parentBulletinID;
 	}
 
 
-	public void setParentBulletinID(int parentBulletinID) {
+	public void setParentBulletinID(UUID parentBulletinID) {
 		this.parentBulletinID = parentBulletinID;
 	}
 
