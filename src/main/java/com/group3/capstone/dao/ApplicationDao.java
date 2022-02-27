@@ -11,6 +11,7 @@ import java.util.UUID;
 
 import com.group3.capstone.beans.Bulletin;
 import com.group3.capstone.beans.Post;
+import com.group3.capstone.beans.User;
 import com.group3.capstone.services.ApplicationService;
 
 public class ApplicationDao implements ApplicationService {
@@ -53,7 +54,7 @@ public class ApplicationDao implements ApplicationService {
 //	}
 	
 	//view a single bulletins registry
-	@Override
+	
 	public List<Post> readBulletin(UUID bulletinID) {
 		
 		Bulletin bulletin = null;
@@ -86,7 +87,6 @@ public class ApplicationDao implements ApplicationService {
 	@Override
 	public Post readPost(String id) {
 		
-		
 		return null;
 	
 	}
@@ -102,6 +102,71 @@ public class ApplicationDao implements ApplicationService {
 		// TODO Auto-generated method stub
 		
 	}
+	@Override
+	public Map<Integer, Bulletin> readACBulletin() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Post> readBulletin(int bulletinID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
+	
+	//all CRUD operations for USER table
+	
+public boolean readUser(String x, String y) {
+	boolean match = false;
+	String sql = "SELECT * FROM user WHERE username=? AND password=?;";
+	try {
+		PreparedStatement statement = connection.prepareStatement(sql);
+		statement.setString(0, x);
+		statement.setString(1, y);
+		
+		ResultSet set = statement.executeQuery();
+		if (set != null) {
+			match = true;
+		}
+		
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+	return match ;
+	}
+	
+	public User createUser(User user) {
+		try {
+			//get connection to DB
+			Connection connection = DBConnection.getConnectionToDatabase();
+			//write insert query for new user
+			String sql = "INSERT INTO user (firstName, lastName, userName, password, email, userId) values (?,?,?,?,?,?);";
+			PreparedStatement statement = connection.prepareStatement(sql);
+			statement.setString(0, user.getFirstName());
+			statement.setString(1, user.getLastName());
+			statement.setString(2, user.getUserName() );
+			statement.setString(3, user.getPassword());
+			statement.setString(4, user.getEmail());
+			
+			//get UUID as string to pass to DB
+			UUID string = user.getUserID();
+			String uuiD = string.toString();
+			
+			statement.setString(5,  uuiD);
+			
+			//execute query and update result set
+			statement.execute();
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+			
+		}
+		return user;
 	
 
+}
+
+	
 }

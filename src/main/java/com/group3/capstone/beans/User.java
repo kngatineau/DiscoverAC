@@ -3,7 +3,7 @@ package com.group3.capstone.beans;
 import java.awt.image.BufferedImage;
 import java.util.UUID;
 
-public abstract class User {
+public class User {
 	
 	private UUID userID;
 	private String userName;
