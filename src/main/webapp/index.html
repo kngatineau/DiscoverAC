@@ -2,11 +2,28 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>DiscoverAC</title>
+<title>DiscoverAC - Login</title>
 </head>
 <body>
-<form action="RegisterServlet">
-	<input type="submit" value="Register" id="register">
-</form>
+<h1 style="margin:auto; text-align:center;color:green">DiscoverAC</h1>
+ <form action="RegisterServlet" method="post">
+	<table style="margin:auto;">
+
+		 <tr>
+			<th id="content">Username: </th>
+				<td>
+					<input type="text" name="username" id="username"></td>
+		 </tr>
+		 		 		<tr>
+			<th id="content">Password: </th>
+				<td>
+					<input type="text" name="password" id="password"></td>
+		 </tr>
+		 		 		
+		 <tr>
+		 	<th colspan="2"><input type="submit" value="Login" id="login"></th>
+		 </tr>
+	</table>
+	</form>	
 </body>
 </html>

@@ -37,7 +37,7 @@ public class RegisterServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//String page = getHTMLString(request.getServletContext().getRealPath("/register.html"));
-		String page = getHTMLString(request.getServletContext().getRealPath("/login.html"));
+		String page = getHTMLString(request.getServletContext().getRealPath("/index.html"));
 		response.getWriter().write(page);
 	}
 
@@ -88,7 +88,7 @@ public class RegisterServlet extends HttpServlet {
 		}
 		else {
 			System.out.println("Access Denied");
-			String page = getHTMLString(request.getServletContext().getRealPath("/login.html"));
+			String page = getHTMLString(request.getServletContext().getRealPath("/index.html"));
 			//ideally would like alert to user to try again 
 			PrintWriter writer = response.getWriter();
 			writer.write(page);
