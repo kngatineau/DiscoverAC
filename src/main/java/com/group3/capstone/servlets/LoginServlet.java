@@ -18,16 +18,16 @@ import com.group3.capstone.beans.User;
 import com.group3.capstone.dao.ApplicationDao;
 
 /**
- * Servlet implementation class RegisterServlet
+ * Servlet implementation class LoginServlet
  */
-@WebServlet("/RegisterServlet")
-public class RegisterServlet extends HttpServlet {
+@WebServlet("/")
+public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public RegisterServlet() {
+    public LoginServlet() {
         super();
     }
 
@@ -85,7 +85,7 @@ public class RegisterServlet extends HttpServlet {
 			System.out.println("User authentication approved");
 			
 			// Redirect to new servlet instead of rewriting dashboard on the same page.
-			response.sendRedirect("dashboard.html");
+			response.sendRedirect("dashboard");
 //			String page = getHTMLString(request.getServletContext().getRealPath("/dashboard.html"));
 //			response.getWriter().write(page);
 			
