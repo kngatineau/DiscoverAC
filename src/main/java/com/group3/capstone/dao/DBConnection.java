@@ -12,7 +12,7 @@ public class DBConnection {
 		final String dbName = "DiscoverAc";
 		
 		final String dbUrl = "jdbc:mysql://cst8288capstone.mysql.database.azure.com:3306/"
-										+ dbName +"?useSSL=true&requireSSL=false";
+										+ dbName +"?useSSL=true&requireSSL=false&autoReconnect=true";
 		
 	    final String dbUser = "Group3@cst8288capstone";
 	    final String dbPassword = "AlgonquinCP2022Winter";
