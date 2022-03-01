@@ -137,6 +137,26 @@ public class ApplicationDao implements ApplicationService {
 	return match ;
 	}
 	
+	public User getUser(String userName) {
+	User retrievedUser = null;
+	String sql = "SELECT * FROM user WHERE username="+userName+";";
+	try {
+		PreparedStatement statement = connection.prepareStatement(sql);
+		ResultSet set = statement.executeQuery();
+		if (set.next()) {
+			retrievedUser = new User(set.getString("userId"), set.getString("firstName"), set.getString("lastName"), 
+					set.getString("userName"), set.getString("email"), set.getString("password"));
+		}
+		retrievedUser = new User("NullFirsName", "NullLastName", "NullUserName", "NullEmail", "NullPassword");
+
+		
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+	return retrievedUser;
+	}
+	
+	
 	public User createUser(User user) {
 		try {
 			//write insert query for new user

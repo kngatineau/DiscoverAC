@@ -22,13 +22,22 @@ public class User {
 		this.userID = UUID.randomUUID();
 	}
 	
-	public User(String first, String last, String userName, String password, String email) {
+	public User(String first, String last, String userName, String email, String password) {
 		this.firstName = first;
 		this.lastName = last;
 		this.userName = userName;
-		this.password = password;
 		this.email = email;
+		this.password = password;
 		this.userID = UUID.randomUUID();
+	}
+	
+	public User(String userID, String first, String last, String userName, String email, String password) {
+		this.userID = UUID.fromString(userID);
+		this.firstName = first;
+		this.lastName = last;
+		this.userName = userName;
+		this.email = email;
+		this.password = password;
 	}
 	
 	public UUID getUserID() {
