@@ -118,7 +118,7 @@ public class ApplicationDao implements ApplicationService {
 	
 	//all CRUD operations for USER table
 	//method to verify if user is in database of registered users
-	public boolean readUser(String x, String y) {
+	public boolean verifyUser(String x, String y) {
 	boolean match = false;
 	String sql = "SELECT * FROM user WHERE username=? AND password=?;";
 	try {
@@ -137,17 +137,34 @@ public class ApplicationDao implements ApplicationService {
 	return match ;
 	}
 	
+	public boolean verifyUser(UUID userId) {
+	boolean match = false;
+	String sql = "SELECT * FROM user WHERE userId = '"+userId.toString()+"';";
+	try {
+		PreparedStatement statement = connection.prepareStatement(sql);
+		ResultSet set = statement.executeQuery();
+		if (set.next()) {
+			match = true;
+		}
+		
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+	return match ;
+	}
+	
 	public User getUser(String userName) {
 	User retrievedUser = null;
-	String sql = "SELECT * FROM user WHERE username="+userName+";";
+	String sql = "SELECT * FROM user WHERE username= '"+userName+"';";
 	try {
 		PreparedStatement statement = connection.prepareStatement(sql);
 		ResultSet set = statement.executeQuery();
 		if (set.next()) {
 			retrievedUser = new User(set.getString("userId"), set.getString("firstName"), set.getString("lastName"), 
 					set.getString("userName"), set.getString("email"), set.getString("password"));
+		} else {			
+			retrievedUser = new User("NullFirsName", "NullLastName", "NullUserName", "NullEmail", "NullPassword");
 		}
-		retrievedUser = new User("NullFirsName", "NullLastName", "NullUserName", "NullEmail", "NullPassword");
 
 		
 	} catch (SQLException e) {

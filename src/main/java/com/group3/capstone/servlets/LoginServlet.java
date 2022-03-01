@@ -79,13 +79,14 @@ public class LoginServlet extends HttpServlet {
 		
 //		AdminRole.createUser(user);
 		
-		boolean permissionGranted = AdminRole.readUser(userName, password);
+		boolean permissionGranted = AdminRole.verifyUser(userName, password);
 		
 		if (permissionGranted) {
 			System.out.println("User authentication approved");
+			user = AdminRole.getUser(userName);
 			
 			// Redirect to new servlet instead of rewriting dashboard on the same page.
-			response.sendRedirect("dashboard");
+			response.sendRedirect("dashboard?user="+user.getUserID().toString());
 //			String page = getHTMLString(request.getServletContext().getRealPath("/dashboard.html"));
 //			response.getWriter().write(page);
 			
