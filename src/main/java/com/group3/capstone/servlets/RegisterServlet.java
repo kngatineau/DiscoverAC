@@ -83,8 +83,12 @@ public class RegisterServlet extends HttpServlet {
 		
 		if (permissionGranted) {
 			System.out.println("User authentication approved");
-			String page = getHTMLString(request.getServletContext().getRealPath("/dashboard.html"));
-			response.getWriter().write(page);
+			
+			// Redirect to new servlet instead of rewriting dashboard on the same page.
+			response.sendRedirect("dashboard.html");
+//			String page = getHTMLString(request.getServletContext().getRealPath("/dashboard.html"));
+//			response.getWriter().write(page);
+			
 		}
 		else {
 			System.out.println("Access Denied");
