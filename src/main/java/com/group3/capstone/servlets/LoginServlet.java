@@ -18,16 +18,16 @@ import com.group3.capstone.beans.User;
 import com.group3.capstone.dao.ApplicationDao;
 
 /**
- * Servlet implementation class RegisterServlet
+ * Servlet implementation class LoginServlet
  */
-@WebServlet("/RegisterServlet")
-public class RegisterServlet extends HttpServlet {
+@WebServlet("/")
+public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public RegisterServlet() {
+    public LoginServlet() {
         super();
     }
 
@@ -79,12 +79,17 @@ public class RegisterServlet extends HttpServlet {
 		
 //		AdminRole.createUser(user);
 		
-		boolean permissionGranted = AdminRole.readUser(userName, password);
+		boolean permissionGranted = AdminRole.verifyUser(userName, password);
 		
 		if (permissionGranted) {
 			System.out.println("User authentication approved");
-			String page = getHTMLString(request.getServletContext().getRealPath("/dashboard.html"));
-			response.getWriter().write(page);
+			user = AdminRole.getUser(userName);
+			
+			// Redirect to new servlet instead of rewriting dashboard on the same page.
+			response.sendRedirect("dashboard?user="+user.getUserID().toString());
+//			String page = getHTMLString(request.getServletContext().getRealPath("/dashboard.html"));
+//			response.getWriter().write(page);
+			
 		}
 		else {
 			System.out.println("Access Denied");
