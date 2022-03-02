@@ -4,23 +4,19 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.UUID;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.group3.capstone.beans.AdminRole;
-import com.group3.capstone.beans.SignedUserRole;
 import com.group3.capstone.beans.User;
 import com.group3.capstone.dao.ApplicationDao;
 
 /**
  * Servlet implementation class LoginServlet
  */
-@WebServlet("/")
+@WebServlet("/login")
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -36,7 +32,6 @@ public class LoginServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		//String page = getHTMLString(request.getServletContext().getRealPath("/register.html"));
 		String page = getHTMLString(request.getServletContext().getRealPath("/index.html"));
 		response.getWriter().write(page);
 	}
@@ -87,19 +82,18 @@ public class LoginServlet extends HttpServlet {
 			
 			// Redirect to new servlet instead of rewriting dashboard on the same page.
 			response.sendRedirect("dashboard?user="+user.getUserID().toString());
-//			String page = getHTMLString(request.getServletContext().getRealPath("/dashboard.html"));
-//			response.getWriter().write(page);
 			
 		}
 		else {
 			System.out.println("Access Denied");
 			String page = getHTMLString(request.getServletContext().getRealPath("/index.html"));
-			//ideally would like alert to user to try again 
+			
+			//Notify user, ideally would like alert to user to try again 
+			page += "<h3 style=\"margin:auto; text-align:center;color:red\">Wrong username or password. \nPlease try again!</h3>";
 			PrintWriter writer = response.getWriter();
 			writer.write(page);
 		}
-		
-		//doGet(request, response);
+
 	}
 
 }
