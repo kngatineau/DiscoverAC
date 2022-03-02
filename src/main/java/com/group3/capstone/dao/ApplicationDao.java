@@ -1,12 +1,12 @@
 package com.group3.capstone.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.LinkedHashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 import com.group3.capstone.beans.Bulletin;
@@ -23,66 +23,6 @@ public class ApplicationDao implements ApplicationService {
     	this.connection = DBConnection.getConnectionToDatabase();;
 
     }
-// Commented out for future use.
-//
-//	//see entire AC Bulletin
-//	@Override
-//	public Map<Integer, Bulletin> readACBulletin() {
-//		
-//		Bulletin bulletin = null;
-//		Map<Integer, Bulletin> posts = new LinkedHashMap<Integer, Bulletin>();
-//		
-//		try {
-//			//write select query
-//			String sql = "select * from bulletin;";
-//			PreparedStatement statement = connection.prepareStatement(sql);
-//			
-//			//execute query
-//			ResultSet set = statement.executeQuery();
-//			while (set.next()) {
-//				bulletin = new Bulletin();
-//				bulletin.setBulletinID(set.getInt("bulletinId"));
-//				bulletin.setBulletinName(set.getString("bulletinName"));
-//				//put each set into list 
-//				posts.put(bulletin.getBulletinID(), bulletin);
-//				
-//			}
-//		}catch (SQLException exception) {
-//			exception.printStackTrace();	
-//		}
-//		return posts;
-//	}
-	
-	//view a single bulletins registry
-	
-	public List<Post> readBulletin(UUID bulletinID) {
-		
-		Bulletin bulletin = null;
-		List<Post> postRegistry = null;
-		
-		try {
-			//write select query
-			String sql = "select * from bulletin where bulletinId = " + bulletinID.toString();
-			
-			// HJ: Wondering if the below prepareStatement will be superceded by JSP approach.
-			PreparedStatement statement = connection.prepareStatement(sql);
-			//set to id given in parameter
-			statement.setString(1, bulletinID.toString());
-			
-			//execute query
-			ResultSet set = statement.executeQuery();
-			while (set.next()) {
-				bulletin = new Bulletin();
-				bulletin.setBulletinID(UUID.fromString(set.getString("bulletinID")));
-				bulletin.setBulletinName(set.getString("bulletinName"));
-				//use method from Bulletin to show registry
-			}
-		}catch (SQLException exception) {
-			exception.printStackTrace();	
-		}
-		postRegistry = bulletin.getPostRegistry();
-		return postRegistry;
-	}
 
 	@Override
 	public Post readPost(String id) {
@@ -103,17 +43,58 @@ public class ApplicationDao implements ApplicationService {
 		
 	}
 	@Override
-	public Map<Integer, Bulletin> readACBulletin() {
-		// TODO Auto-generated method stub
-		return null;
+	public Bulletin getBulletin(UUID bulletinId) {
+		Bulletin retrievedBulletin = null;
+		
+		try {
+			//Search for bulletin
+			String sql = "select * from bulletin where bulletinId = \'" + bulletinId.toString() +"\';";
+			PreparedStatement statement = connection.prepareStatement(sql);
+			
+			//execute query
+			ResultSet set = statement.executeQuery();
+			while (set.next()) {
+				//Retrieve bulletin if exists.
+				retrievedBulletin = new Bulletin(UUID.fromString(set.getString("bulletinId")), set.getString("bulletinName"));
+			}
+		}catch (SQLException exception) {
+			exception.printStackTrace();	
+		}
+		
+		return retrievedBulletin;
 	}
 
+	//view a single bulletins registry
 	@Override
-	public List<Post> readBulletin(int bulletinID) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
+	public List<Post> getBulletinPosts(UUID bulletinId) {
+		
+		List<Post> postRegistry = new ArrayList<Post>();
+		
+		try {
+			//write select query
+			String sql = "select * from post where bulletinId = \'" + bulletinId.toString() +"\'"
+					+ "order by postDate desc;";
+			
+			PreparedStatement statement = connection.prepareStatement(sql);
+			
+			//execute query
+			ResultSet set = statement.executeQuery();
+			while (set.next()) {
+				//Add new post object if exists.
+				postRegistry.add(
+						new Post(UUID.fromString(set.getString("postId")),
+								set.getString("title"),set.getString("description"),set.getString("url"),
+								Date.valueOf(set.getString("postDate")),
+								UUID.fromString(set.getString("bulletinId")),
+								UUID.fromString(set.getString("authorId"))
+								));
+			}
+		}catch (SQLException exception) {
+			exception.printStackTrace();	
+		}
+		
+		return postRegistry;
+	}	
 	
 	
 	//all CRUD operations for USER table
@@ -137,6 +118,7 @@ public class ApplicationDao implements ApplicationService {
 	return match ;
 	}
 	
+	@Override
 	public boolean verifyUser(UUID userId) {
 	boolean match = false;
 	String sql = "SELECT * FROM user WHERE userId = '"+userId.toString()+"';";
@@ -173,7 +155,28 @@ public class ApplicationDao implements ApplicationService {
 	return retrievedUser;
 	}
 	
+	@Override	
+	public User getUser(UUID userId) {
+	User retrievedUser = null;
+	String sql = "SELECT * FROM user WHERE userId= '"+userId.toString()+"';";
+	try {
+		PreparedStatement statement = connection.prepareStatement(sql);
+		ResultSet set = statement.executeQuery();
+		if (set.next()) {
+			retrievedUser = new User(set.getString("userId"), set.getString("firstName"), set.getString("lastName"), 
+					set.getString("userName"), set.getString("email"), set.getString("password"));
+		} else {			
+			retrievedUser = new User("NullFirsName", "NullLastName", "NullUserName", "NullEmail", "NullPassword");
+		}
+
+		
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+	return retrievedUser;
+	}
 	
+	@Override
 	public User createUser(User user) {
 		try {
 			//write insert query for new user
