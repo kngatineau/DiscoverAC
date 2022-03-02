@@ -120,7 +120,7 @@ public class DashboardServlet extends HttpServlet {
              		+ "			<td>"+ post.getTitle()+"</td>\n"
             		+ "			<td>"+ post.getDescription()+"</td>\n"
             		+ "         <td>"
-            		+ "  			<a href="+ post.getUrl()+"\">"+post.getUrl()+"</a>"
+            		+ "  			<a href=\"http://"+ post.getUrl()+"\">"+post.getUrl()+"</a>"
              		+ "			</td>\n"
              		+ "         <td>"+ post.getPostDate().toString()+"</td>\n"
                     + "         <td>"+ user.getUserName()+"</td>\n"
