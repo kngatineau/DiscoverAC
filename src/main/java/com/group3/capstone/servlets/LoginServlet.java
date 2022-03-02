@@ -36,7 +36,6 @@ public class LoginServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		//String page = getHTMLString(request.getServletContext().getRealPath("/register.html"));
 		String page = getHTMLString(request.getServletContext().getRealPath("/index.html"));
 		response.getWriter().write(page);
 	}
@@ -87,8 +86,6 @@ public class LoginServlet extends HttpServlet {
 			
 			// Redirect to new servlet instead of rewriting dashboard on the same page.
 			response.sendRedirect("dashboard?user="+user.getUserID().toString());
-//			String page = getHTMLString(request.getServletContext().getRealPath("/dashboard.html"));
-//			response.getWriter().write(page);
 			
 		}
 		else {
@@ -100,8 +97,7 @@ public class LoginServlet extends HttpServlet {
 			PrintWriter writer = response.getWriter();
 			writer.write(page);
 		}
-		
-		//doGet(request, response);
+
 	}
 
 }
