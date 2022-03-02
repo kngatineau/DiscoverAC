@@ -3,9 +3,10 @@ package com.group3.capstone.servlets;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.PreparedStatement;
+import java.io.Writer;
 import java.sql.SQLException;
+import java.text.MessageFormat;
+import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.ServletException;
@@ -14,8 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.group3.capstone.beans.AdminRole;
-import com.group3.capstone.beans.SignedUserRole;
+import com.group3.capstone.beans.Post;
 import com.group3.capstone.beans.User;
 import com.group3.capstone.dao.ApplicationDao;
 
@@ -29,6 +29,10 @@ public class DashboardServlet extends HttpServlet {
 	User user = null;
 	UUID userId = null;
 	String page = null;
+	ApplicationDao userDB = new ApplicationDao();
+	
+	//Initialize bulletinId with Algonquin College bulletin ID.
+	UUID bulletinId = UUID.fromString("930cc92d-8a1f-4ba5-90b6-4373d90d6e22");
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -40,90 +44,95 @@ public class DashboardServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		//Temporary Face
-		String page = getHTMLString(request.getServletContext().getRealPath("/dashboard.html"));
-		response.getWriter().write(page);
+		System.out.println("inside dashboard doget");
+//		//Temporary Face
+		page = getHTMLString(request.getServletContext().getRealPath("/dashboard.html"));
+//		response.getWriter().write(page);
 		
 		//User Entry Logic
-/*		
+		Writer writer = response.getWriter();
+		
 		// Check if userID is in an appropriate format.
-		Boolean userIdCheck = true;
+		Boolean userIdWrongFormat = false;
 		try {			
 			userId = UUID.fromString(request.getParameter("user"));
-		} catch (IllegalArgumentException e) {
+			System.out.println(userId.toString());
+			
+		} catch (IllegalArgumentException | NullPointerException e) {
 			e.printStackTrace();
-			userIdCheck = false;
+			userIdWrongFormat = true;
 		}
 		
 		// If UserID is in in an inappropriate format, prompt user to login appropriately.
-		if (!userIdCheck) {
-			// Notify inappropriate login.
-			page = getHTMLString(request.getServletContext().getRealPath("/wronguser.html"));
-//			PreparedStatement statement = prepareStatement(page);
-//
-//			for (int count=5; count>1; count--) {
-//				statement.setString(1, x);
-//			}
-			// Send user back home after a few seconds.
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		if (userIdWrongFormat) {
+			response.sendRedirect("login");
 			
-			response.sendRedirect("");
 		} else {
 			// Check if user allowed to access bulletin.
-			Boolean userExistsCheck = false;
+			Boolean userIdDoesNotExist = false;
 			
-			ApplicationDao UserDB = new ApplicationDao();
-			userExistsCheck = UserDB.verifyUser(userId);
-			if (!userExistsCheck) {
+
+			userIdDoesNotExist = userDB.verifyUser(userId);
+			if (!userIdDoesNotExist) {
+				System.out.println("user does not exist");
+				// Redirect to login.
+				response.sendRedirect("login");
 				
 			} else {
 				// Display Dashboard page if legimate user
+				System.out.println("user exists");
+				user = userDB.getUser(userId);
 				page = getHTMLString(request.getServletContext().getRealPath("/dashboard.html"));
+				page = MessageFormat.format(page, user.getFirstName(), user.getLastName());
+				
+				try {
+					// Write bulletin posts to page if posts exist.
+					page += populatePosts(userDB.getBulletinPosts(bulletinId));
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				
+				writer.write(page);
 				
 			}
+
 		}
 		
 	}
-		
-//		
-//		
-//		// Initial page
-//
-//		
-//		ApplicationDao AdminRole = new ApplicationDao();
-//		
-//
-//		boolean permissionGranted = AdminRole.verifyUser(userName, password);
-//		
-//		if (permissionGranted) {
-//			System.out.println("User authentication approved");
-//			
-//			// Redirect to new servlet instead of rewriting dashboard on the same page.
-//			response.sendRedirect("dashboard");
-////			String page = getHTMLString(request.getServletContext().getRealPath("/dashboard.html"));
-////			response.getWriter().write(page);
-//			
-//		}
-//		else {
-//			System.out.println("Access Denied");
-//			String page = getHTMLString(request.getServletContext().getRealPath("/index.html"));
-//			//ideally would like alert to user to try again 
-//			PrintWriter writer = response.getWriter();
-//			writer.write(page);
-//		}
-//		
-//		
-//		
-//		response.getWriter().write(page);
- */
-		
-}
+    public String populatePosts(List<Post> posts) throws SQLException{
+    	String htmlResults = "<h4>"+userDB.getBulletin(bulletinId).getBulletinName()+" Bulletin Board:</h4>"
+    			+ "<table>"
+        		+ "        <thead>\n"
+        		+ "            <tr>\n"
+        		+ "                <th>Title</th>\n"
+        		+ "                <th>Description</th>\n"
+        		+ "                <th>URL</th>\n"
+        		+ "                <th>Post Date</th>\n"
+        		+ "                <th>Author</th>\n"
+        		+ "            </tr>\n"
+        		+ "        </thead>\n";
+    	User user = null;
+    	
+    	
+    	for(Post post: posts) {
+    		user = userDB.getUser(post.getAuthorId());
+    		htmlResults += "<tr>\n"
+             		+ "			<td>"+ post.getTitle()+"</td>\n"
+            		+ "			<td>"+ post.getDescription()+"</td>\n"
+            		+ "         <td>"
+            		+ "  			<a href="+ post.getUrl()+"\">"+post.getUrl()+"</a>"
+             		+ "			</td>\n"
+             		+ "         <td>"+ post.getPostDate().toString()+"</td>\n"
+                    + "         <td>"+ user.getUserName()+"</td>\n"
+            		+ "		</tr>";
+    	}
+    	
+        // Finally, add the closing html:
+        htmlResults += "        </tbody></table>";
+    	
+    	return htmlResults;
+    	
+    }
 
 	public String getHTMLString(String filePath) throws IOException {
 		BufferedReader reader = new BufferedReader(new FileReader(filePath));
