@@ -5,26 +5,30 @@ import java.util.UUID;
 
 public class Bulletin {
 	
-	private UUID bulletinID;
+	private UUID bulletinId;
 	private String bulletinName;
 	private String bulletinDescription;
-	private UUID parentBulletinID;
-	private List<Integer> checkBulletinID;
+	private UUID parentBulletinId;
+	private List<Integer> checkBulletinId;
 	private List<Post> postRegistry;
-	
-	// may not actually return void
+
+	public Bulletin(UUID bulletinId, String bulletinName){
+		this.bulletinId = bulletinId;
+		this.bulletinName = bulletinName;
+	}
+
 	private void viewPostByDate() {
 		
 	}
 
 
 	public UUID getBulletinID() {
-		return bulletinID;
+		return bulletinId;
 	}
 
 
-	public void setBulletinID(UUID bulletinID) {
-		this.bulletinID = bulletinID;
+	public void setBulletinID(UUID bulletinId) {
+		this.bulletinId = bulletinId;
 	}
 
 
@@ -49,22 +53,22 @@ public class Bulletin {
 
 
 	public UUID getParentBulletinID() {
-		return parentBulletinID;
+		return parentBulletinId;
 	}
 
 
-	public void setParentBulletinID(UUID parentBulletinID) {
-		this.parentBulletinID = parentBulletinID;
+	public void setParentBulletinID(UUID parentBulletinId) {
+		this.parentBulletinId = parentBulletinId;
 	}
 
 
 	public List<Integer> getCheckBulletinID() {
-		return checkBulletinID;
+		return checkBulletinId;
 	}
 
 
-	public void setCheckBulletinID(List<Integer> checkBulletinID) {
-		this.checkBulletinID = checkBulletinID;
+	public void setCheckBulletinID(List<Integer> checkBulletinId) {
+		this.checkBulletinId = checkBulletinId;
 	}
 
 
