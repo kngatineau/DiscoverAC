@@ -100,8 +100,9 @@ public class DashboardServlet extends HttpServlet {
 		
 	}
     public String populatePosts(List<Post> posts) throws SQLException{
-    	String htmlResults = "<h4>"+userDB.getBulletin(bulletinId).getBulletinName()+" Bulletin Board:</h4>"
-    			+ "<table>"
+    	String htmlResults = "<h4 style='text-align:center; font-size: 25px;'>"
+    			+userDB.getBulletin(bulletinId).getBulletinName() +" Bulletin Board:</h4>"
+    			+ "<table style='border-collapse: collapse;'>"
         		+ "        <thead>\n"
         		+ "            <tr>\n"
         		+ "                <th>Title</th>\n"
@@ -116,15 +117,17 @@ public class DashboardServlet extends HttpServlet {
     	
     	for(Post post: posts) {
     		user = userDB.getUser(post.getAuthorId());
-    		htmlResults += "<tr>\n"
-             		+ "			<td>"+ post.getTitle()+"</td>\n"
-            		+ "			<td>"+ post.getDescription()+"</td>\n"
-            		+ "         <td>"
-            		+ "  			<a href=\"http://"+ post.getUrl()+"\">"+post.getUrl()+"</a>"
+    		htmlResults += "<tr style='height:100px; background-color:#ccedc5; "
+    				+ "border-bottom: 10px solid white;'>\n"
+             		+ "			<td style='padding-right:20px;''>"+ post.getTitle()+"</td>\n"
+            		+ "			<td style='width:300px; padding-right:20px;'>"
+             		+ post.getDescription()+"</td>\n"
+            		+ "         <td style='padding-right:20px;'>"
+            		+ "  			<a href=\""+ post.getUrl()+"\">"+post.getUrl()+"</a>"
              		+ "			</td>\n"
-             		+ "         <td>"+ post.getPostDate().toString()+"</td>\n"
-                    + "         <td>"+ user.getUserName()+"</td>\n"
-            		+ "		</tr>";
+             		+ "         <td style='padding-right:20px;'>"+ post.getPostDate().toString()+"</td>\n"
+                    + "         <td style='padding-right:20px;'>"+ user.getUserName()+"</td>\n"
+            		+ "</tr>";
     	}
     	
         // Finally, add the closing html:
