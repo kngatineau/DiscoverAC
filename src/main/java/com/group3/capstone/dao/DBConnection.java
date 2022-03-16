@@ -39,7 +39,7 @@ public class DBConnection {
 			e.printStackTrace();
 		}
 		if (connection != null) {
-			System.out.print("Connection made to db!");
+			System.out.println("Connection made to db!");
 		}
 	}
 	

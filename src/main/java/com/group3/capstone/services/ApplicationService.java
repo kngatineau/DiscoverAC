@@ -24,15 +24,12 @@ public interface ApplicationService {
 	public void deletePost(String id);
 	
 	//for Users
-	public boolean verifyUser(UUID userId);
-	
+	public void createUser(User user);
 	public User getUser(UUID userId);
-	
-	public User createUser(User user);
+	public boolean verifyUser(UUID userId);
 	
 	// To Manage User Sessions
 	public void createSession(UserSession session);
-	
 	public UserSession getSession(UUID sessionId);
-	
+	public boolean verifySession(UUID sessionId);
 }

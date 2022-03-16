@@ -99,6 +99,69 @@ public class ApplicationDao implements ApplicationService {
 	
 	
 	//all CRUD operations for USER table
+	@Override
+	public void createUser(User user) {
+		try {
+			//write insert query for new user
+			String sql = "INSERT INTO user (firstName, lastName, userName, password, email, userId) values (?,?,?,?,?,?);";
+			PreparedStatement statement = connection.prepareStatement(sql);
+			statement.setString(1, user.getFirstName());
+			statement.setString(2, user.getLastName());
+			statement.setString(3, user.getUserName() );
+			statement.setString(4, user.getPassword());
+			statement.setString(5, user.getEmail());
+			//get UUID as string to pass to DB
+			UUID string = user.getUserID();
+			String uuiD = string.toString();
+			statement.setString(6,  uuiD);
+			
+			statement.execute();
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override	
+	public User getUser(UUID userId) {
+	User retrievedUser = null;
+	String sql = "SELECT * FROM user WHERE userId= '"+userId.toString()+"';";
+	try {
+		PreparedStatement statement = connection.prepareStatement(sql);
+		ResultSet set = statement.executeQuery();
+		if (set.next()) {
+			retrievedUser = new User(set.getString("userId"), set.getString("firstName"), set.getString("lastName"), 
+					set.getString("userName"), set.getString("email"), set.getString("password"));
+		} else {			
+			retrievedUser = new User("NullFirsName", "NullLastName", "NullUserName", "NullEmail", "NullPassword");
+		}
+
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+	return retrievedUser;
+	}
+	
+	public User getUser(String userName) {
+	User retrievedUser = null;
+	String sql = "SELECT * FROM user WHERE username= '"+userName+"';";
+	try {
+		PreparedStatement statement = connection.prepareStatement(sql);
+		ResultSet set = statement.executeQuery();
+		if (set.next()) {
+			retrievedUser = new User(set.getString("userId"), set.getString("firstName"), set.getString("lastName"), 
+					set.getString("userName"), set.getString("email"), set.getString("password"));
+		} else {			
+			retrievedUser = new User("NullFirsName", "NullLastName", "NullUserName", "NullEmail", "NullPassword");
+		}
+
+		
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+	return retrievedUser;
+	}
+	
 	//method to verify if user is in database of registered users
 	public boolean verifyUser(String x, String y) {
 	boolean match = false;
@@ -136,79 +199,15 @@ public class ApplicationDao implements ApplicationService {
 	return match ;
 	}
 	
-	public User getUser(String userName) {
-	User retrievedUser = null;
-	String sql = "SELECT * FROM user WHERE username= '"+userName+"';";
-	try {
-		PreparedStatement statement = connection.prepareStatement(sql);
-		ResultSet set = statement.executeQuery();
-		if (set.next()) {
-			retrievedUser = new User(set.getString("userId"), set.getString("firstName"), set.getString("lastName"), 
-					set.getString("userName"), set.getString("email"), set.getString("password"));
-		} else {			
-			retrievedUser = new User("NullFirsName", "NullLastName", "NullUserName", "NullEmail", "NullPassword");
-		}
-
-		
-	} catch (SQLException e) {
-		e.printStackTrace();
-	}
-	return retrievedUser;
-	}
 	
-	@Override	
-	public User getUser(UUID userId) {
-	User retrievedUser = null;
-	String sql = "SELECT * FROM user WHERE userId= '"+userId.toString()+"';";
-	try {
-		PreparedStatement statement = connection.prepareStatement(sql);
-		ResultSet set = statement.executeQuery();
-		if (set.next()) {
-			retrievedUser = new User(set.getString("userId"), set.getString("firstName"), set.getString("lastName"), 
-					set.getString("userName"), set.getString("email"), set.getString("password"));
-		} else {			
-			retrievedUser = new User("NullFirsName", "NullLastName", "NullUserName", "NullEmail", "NullPassword");
-		}
-
-		
-	} catch (SQLException e) {
-		e.printStackTrace();
-	}
-	return retrievedUser;
-	}
-	
-	@Override
-	public User createUser(User user) {
-		try {
-			//write insert query for new user
-			String sql = "INSERT INTO user (firstName, lastName, userName, password, email, userId) values (?,?,?,?,?,?);";
-			PreparedStatement statement = connection.prepareStatement(sql);
-			statement.setString(0, user.getFirstName());
-			statement.setString(1, user.getLastName());
-			statement.setString(2, user.getUserName() );
-			statement.setString(3, user.getPassword());
-			statement.setString(4, user.getEmail());
-			//get UUID as string to pass to DB
-			UUID string = user.getUserID();
-			String uuiD = string.toString();
-			statement.setString(5,  uuiD);
-			
-			statement.execute();
-		}
-		catch(SQLException e) {
-			e.printStackTrace();
-		}
-		return user;
-	}
-
 	@Override
 	public void createSession(UserSession session) {
 		try {
 			//write insert query for new session
 			String sql = "INSERT INTO session (sessionId, userId) values (?,?);";
 			PreparedStatement statement = connection.prepareStatement(sql);
-			statement.setString(0, session.getSessionId().toString());
-			statement.setString(1, session.getUser().getUserID().toString());
+			statement.setString(1, session.getSessionId().toString());
+			statement.setString(2, session.getUser().getUserID().toString());
 			
 			statement.execute();
 		}
@@ -238,4 +237,22 @@ public class ApplicationDao implements ApplicationService {
 		}
 		return retrievedSession;
 	}
+	
+	@Override
+	public boolean verifySession(UUID sessionId) {
+	boolean match = false;
+	String sql = "SELECT * FROM session WHERE sessionId = '"+sessionId.toString()+"';";
+	try {
+		PreparedStatement statement = connection.prepareStatement(sql);
+		ResultSet set = statement.executeQuery();
+		if (set.next()) {
+			match = true;
+		}
+		
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+	return match ;
+	}
+	
 }
