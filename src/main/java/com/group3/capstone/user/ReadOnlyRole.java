@@ -1,6 +1,6 @@
 package com.group3.capstone.user;
 
-public class ReadOnlyRole {
+public class ReadOnlyRole extends Role {
 	
 	private static final String roleName = "READ_ONLY";
 	

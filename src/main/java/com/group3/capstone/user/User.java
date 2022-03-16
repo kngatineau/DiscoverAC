@@ -15,8 +15,8 @@ public class User {
 	private String password;
 	
 	// Below string is a placeholder for now.
-	private String role = "Admin";
-	//private Role role; // above string to be replaced by an actual role object.
+	private String roleString = "Admin";
+	private Role role; // above string to be replaced by an actual role object.
 	
 	
 	public User() {
@@ -88,7 +88,7 @@ public class User {
 	}
 	
 	public String getRole() {
-		return this.role;
+		return this.roleString;
 	}
 	
 	public void confirmVerifiedUser() {

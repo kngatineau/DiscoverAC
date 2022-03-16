@@ -7,7 +7,7 @@ import java.util.UUID;
 
 import com.group3.capstone.dao.DBConnection;
 
-public class AdminRole {
+public class AdminRole extends Role {
 	
 	private static final String roleName = "ADMIN";
 	

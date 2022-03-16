@@ -1,6 +1,6 @@
 package com.group3.capstone.user;
 
-public class AuthorRole {
+public class AuthorRole extends Role {
 	private static final String roleName = "AUTHOR";
 	
 	/**
