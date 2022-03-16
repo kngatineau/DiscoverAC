@@ -5,7 +5,8 @@ import java.util.UUID;
 
 import com.group3.capstone.beans.Bulletin;
 import com.group3.capstone.beans.Post;
-import com.group3.capstone.beans.User;
+import com.group3.capstone.user.User;
+import com.group3.capstone.usersession.UserSession;
 
 public interface ApplicationService {
 	
@@ -23,10 +24,13 @@ public interface ApplicationService {
 	public void deletePost(String id);
 	
 	//for Users
-	public boolean verifyUser(UUID userId);
-	
+	public void createUser(User user);
 	public User getUser(UUID userId);
+	public boolean verifyUser(UUID userId);
+	public boolean updateUser(User user);
 	
-	public User createUser(User user);
-	
+	// To Manage User Sessions
+	public void createSession(UserSession session);
+	public UserSession getSession(UUID sessionId);
+	public boolean verifySession(UUID sessionId);
 }

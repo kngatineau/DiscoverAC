@@ -1,4 +1,4 @@
-package com.group3.capstone.beans;
+package com.group3.capstone.user;
 
 import java.awt.image.BufferedImage;
 import java.util.UUID;
@@ -6,18 +6,19 @@ import java.util.UUID;
 public class User {
 	
 	private UUID userID;
+	private boolean verifiedUser = false;
 	private String userName;
 	private String firstName;
 	private String lastName;
 	private BufferedImage avatar;
 	private String email;
 	private String password;
-	//private Role role; // SignedUserRole? 
 	
-	/**
-	 * Constructors here
-	 */
-	//constructor
+	// Below string is a placeholder for now.
+	private String roleString = "Admin";
+	private Role role; // above string to be replaced by an actual role object.
+	
+	
 	public User() {
 		this.userID = UUID.randomUUID();
 	}
@@ -79,16 +80,19 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public void setEmail(String email2) {
-		
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	public String getEmail() {
 		return this.email;
 	}
 	
+	public String getRole() {
+		return this.roleString;
+	}
 	
+	public void confirmVerifiedUser() {
+		this.verifiedUser = true;
+	}
 	
-	/**
-	 * 'role' getters and setters
-	 */
 }

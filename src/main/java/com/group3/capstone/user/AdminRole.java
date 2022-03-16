@@ -1,4 +1,4 @@
-package com.group3.capstone.beans;
+package com.group3.capstone.user;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,7 +7,7 @@ import java.util.UUID;
 
 import com.group3.capstone.dao.DBConnection;
 
-public class AdminRole {
+public class AdminRole extends Role {
 	
 	private static final String roleName = "ADMIN";
 	

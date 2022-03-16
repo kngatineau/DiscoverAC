@@ -1,13 +1,10 @@
-package com.group3.capstone.beans;
+package com.group3.capstone.user;
 
-//made concrete to test inserting users to database
-public class SignedUserRole {
-//public abstract class SignedUserRole {
+public abstract class Role {
 	
 	private boolean verifiedUser;
 	
-	// these methods may return boolean instead of void pending on implementation
-	
+	// For verifying email address
 	private void verifyLink() {
 		
 	}

@@ -16,8 +16,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.group3.capstone.beans.Post;
-import com.group3.capstone.beans.User;
 import com.group3.capstone.dao.ApplicationDao;
+import com.group3.capstone.user.User;
+import com.group3.capstone.usersession.UserSession;
 
 /**
  * Servlet implementation class DashboardServlet
@@ -25,11 +26,11 @@ import com.group3.capstone.dao.ApplicationDao;
 @WebServlet("/dashboard")
 public class DashboardServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    
+    UserSession session = null;
+    UUID sessionId = null;
 	User user = null;
-	UUID userId = null;
 	String page = null;
-	ApplicationDao userDB = new ApplicationDao();
+	ApplicationDao appDB = new ApplicationDao();
 	
 	//Initialize bulletinId with Algonquin College bulletin ID.
 	UUID bulletinId = UUID.fromString("930cc92d-8a1f-4ba5-90b6-4373d90d6e22");
@@ -44,7 +45,7 @@ public class DashboardServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("inside dashboard doget");
+		System.out.println("Dashboard servlet initiated");
 //		//Temporary Face
 		page = getHTMLString(request.getServletContext().getRealPath("/dashboard.html"));
 //		response.getWriter().write(page);
@@ -52,42 +53,43 @@ public class DashboardServlet extends HttpServlet {
 		//User Entry Logic
 		Writer writer = response.getWriter();
 		
-		// Check if userID is in an appropriate format.
-		Boolean userIdWrongFormat = false;
+		// Check if sessionId is in an appropriate format.
+		Boolean sessionIdWrongFormat = false;
 		try {			
-			userId = UUID.fromString(request.getParameter("user"));
-			System.out.println(userId.toString());
+			sessionId = UUID.fromString(request.getParameter("session"));
+			System.out.println("Session Id: "+sessionId.toString());
 			
 		} catch (IllegalArgumentException | NullPointerException e) {
 			e.printStackTrace();
-			userIdWrongFormat = true;
+			sessionIdWrongFormat = true;
 		}
 		
-		// If UserID is in in an inappropriate format, prompt user to login appropriately.
-		if (userIdWrongFormat) {
+		// If sessionId is in in an inappropriate format, prompt user to login appropriately.
+		if (sessionIdWrongFormat) {
 			response.sendRedirect("login");
 			
 		} else {
-			// Check if user allowed to access bulletin.
-			Boolean userIdDoesNotExist = false;
+			// Check if user session created from login page.
+			Boolean sessionDoesNotExist = false;
 			
 
-			userIdDoesNotExist = userDB.verifyUser(userId);
-			if (!userIdDoesNotExist) {
-				System.out.println("user does not exist");
+			sessionDoesNotExist = appDB.verifySession(sessionId);
+			if (!sessionDoesNotExist) {
+				System.out.println("User session does not exist");
 				// Redirect to login.
 				response.sendRedirect("login");
 				
 			} else {
-				// Display Dashboard page if legimate user
-				System.out.println("user exists");
-				user = userDB.getUser(userId);
+				// Display Dashboard page if legitimate user session
+				System.out.println("User sesion exists");
+				session = appDB.getSession(sessionId);
+				user = session.getUser();
 				page = getHTMLString(request.getServletContext().getRealPath("/dashboard.html"));
 				page = MessageFormat.format(page, user.getFirstName(), user.getLastName());
 				
 				try {
 					// Write bulletin posts to page if posts exist.
-					page += populatePosts(userDB.getBulletinPosts(bulletinId));
+					page += populatePosts(appDB.getBulletinPosts(bulletinId));
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
@@ -101,7 +103,7 @@ public class DashboardServlet extends HttpServlet {
 	}
     public String populatePosts(List<Post> posts) throws SQLException{
     	String htmlResults = "<h4 style='text-align:center; font-size: 25px;'>"
-    			+userDB.getBulletin(bulletinId).getBulletinName() +" Bulletin Board:</h4>"
+    			+appDB.getBulletin(bulletinId).getBulletinName() +" Bulletin Board:</h4>"
     			+ "<table style='border-collapse: collapse;'>"
         		+ "        <thead>\n"
         		+ "            <tr>\n"
@@ -116,7 +118,7 @@ public class DashboardServlet extends HttpServlet {
     	
     	
     	for(Post post: posts) {
-    		user = userDB.getUser(post.getAuthorId());
+    		user = appDB.getUser(post.getAuthorId());
     		htmlResults += "<tr style='height:100px; background-color:#ccedc5; "
     				+ "border-bottom: 10px solid white;'>\n"
              		+ "			<td style='padding-right:20px;''>"+ post.getTitle()+"</td>\n"
