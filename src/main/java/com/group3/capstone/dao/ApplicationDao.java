@@ -13,6 +13,7 @@ import com.group3.capstone.beans.Bulletin;
 import com.group3.capstone.beans.Post;
 import com.group3.capstone.services.ApplicationService;
 import com.group3.capstone.user.User;
+import com.group3.capstone.usersession.UserSession;
 
 public class ApplicationDao implements ApplicationService {
 	
@@ -198,5 +199,43 @@ public class ApplicationDao implements ApplicationService {
 			e.printStackTrace();
 		}
 		return user;
-	}	
+	}
+
+	@Override
+	public void createSession(UserSession session) {
+		try {
+			//write insert query for new session
+			String sql = "INSERT INTO session (sessionId, userId) values (?,?);";
+			PreparedStatement statement = connection.prepareStatement(sql);
+			statement.setString(0, session.getSessionId().toString());
+			statement.setString(1, session.getUser().getUserID().toString());
+			
+			statement.execute();
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public UserSession getSession(UUID sessionId) {
+		UserSession retrievedSession = null;
+		String sql = "SELECT * FROM session WHERE sessionId= '"+sessionId.toString()+"';";
+		try {
+			PreparedStatement statement = connection.prepareStatement(sql);
+			ResultSet set = statement.executeQuery();
+			
+			//Return a UserSession either way - if session didn't exist, we can return a session with a default constructed User.
+			retrievedSession = new UserSession();
+			if (set.next()) {
+				retrievedSession.setSessionId(UUID.fromString(set.getString("sessionId")));
+				User retrievedUser = this.getUser(UUID.fromString(set.getString("userId")));
+				retrievedSession.setUser(retrievedUser);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return retrievedSession;
+	}
 }

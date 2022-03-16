@@ -6,6 +6,7 @@ import java.util.UUID;
 import com.group3.capstone.beans.Bulletin;
 import com.group3.capstone.beans.Post;
 import com.group3.capstone.user.User;
+import com.group3.capstone.usersession.UserSession;
 
 public interface ApplicationService {
 	
@@ -28,5 +29,10 @@ public interface ApplicationService {
 	public User getUser(UUID userId);
 	
 	public User createUser(User user);
+	
+	// To Manage User Sessions
+	public void createSession(UserSession session);
+	
+	public UserSession getSession(UUID sessionId);
 	
 }
