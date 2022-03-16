@@ -103,17 +103,15 @@ public class ApplicationDao implements ApplicationService {
 	public void createUser(User user) {
 		try {
 			//write insert query for new user
-			String sql = "INSERT INTO user (firstName, lastName, userName, password, email, userId) values (?,?,?,?,?,?);";
+			String sql = "INSERT INTO user (userId, userName, password, firstName, lastName, email, role) values (?,?,?,?,?,?,?);";
 			PreparedStatement statement = connection.prepareStatement(sql);
-			statement.setString(1, user.getFirstName());
-			statement.setString(2, user.getLastName());
-			statement.setString(3, user.getUserName() );
-			statement.setString(4, user.getPassword());
-			statement.setString(5, user.getEmail());
-			//get UUID as string to pass to DB
-			UUID string = user.getUserID();
-			String uuiD = string.toString();
-			statement.setString(6,  uuiD);
+			statement.setString(1, user.getUserID().toString());
+			statement.setString(2, user.getUserName() );
+			statement.setString(3, user.getPassword());
+			statement.setString(4, user.getFirstName());
+			statement.setString(5, user.getLastName());
+			statement.setString(6, user.getEmail());
+			statement.setString(7, user.getRole());
 			
 			statement.execute();
 		}
@@ -130,8 +128,7 @@ public class ApplicationDao implements ApplicationService {
 		PreparedStatement statement = connection.prepareStatement(sql);
 		ResultSet set = statement.executeQuery();
 		if (set.next()) {
-			retrievedUser = new User(set.getString("userId"), set.getString("firstName"), set.getString("lastName"), 
-					set.getString("userName"), set.getString("email"), set.getString("password"));
+			retrievedUser = new User(set.getString("userId"), set.getString("firstName"), set.getString("lastName"), set.getString("userName"), set.getString("email"), set.getString("password"));
 		} else {			
 			retrievedUser = new User("NullFirsName", "NullLastName", "NullUserName", "NullEmail", "NullPassword");
 		}
@@ -149,8 +146,7 @@ public class ApplicationDao implements ApplicationService {
 		PreparedStatement statement = connection.prepareStatement(sql);
 		ResultSet set = statement.executeQuery();
 		if (set.next()) {
-			retrievedUser = new User(set.getString("userId"), set.getString("firstName"), set.getString("lastName"), 
-					set.getString("userName"), set.getString("email"), set.getString("password"));
+			retrievedUser = new User(set.getString("userId"), set.getString("firstName"),set.getString("lastName"),set.getString("userName"), set.getString("email"), set.getString("password"));
 		} else {			
 			retrievedUser = new User("NullFirsName", "NullLastName", "NullUserName", "NullEmail", "NullPassword");
 		}
@@ -163,25 +159,6 @@ public class ApplicationDao implements ApplicationService {
 	}
 	
 	//method to verify if user is in database of registered users
-	public boolean verifyUser(String x, String y) {
-	boolean match = false;
-	String sql = "SELECT * FROM user WHERE username=? AND password=?;";
-	try {
-		PreparedStatement statement = connection.prepareStatement(sql);
-		statement.setString(1, x);
-		statement.setString(2, y);
-		
-		ResultSet set = statement.executeQuery();
-		if (set.next()) {
-			match = true;
-		}
-		
-	} catch (SQLException e) {
-		e.printStackTrace();
-	}
-	return match ;
-	}
-	
 	@Override
 	public boolean verifyUser(UUID userId) {
 	boolean match = false;
@@ -198,7 +175,70 @@ public class ApplicationDao implements ApplicationService {
 	}
 	return match ;
 	}
+
+	public boolean verifyUserEmail(String email) {
+	boolean match = false;
+	String sql = "SELECT * FROM user WHERE email=?;";
+	try {
+		PreparedStatement statement = connection.prepareStatement(sql);
+		statement.setString(1, email);
+		
+		ResultSet set = statement.executeQuery();
+		if (set.next()) {
+			match = true;
+		}
+		
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+	return match ;
+	}
 	
+	public boolean verifyUserName(String userName) {
+	boolean match = false;
+	String sql = "SELECT * FROM user WHERE username=?;";
+	try {
+		PreparedStatement statement = connection.prepareStatement(sql);
+		statement.setString(1, userName);
+		
+		ResultSet set = statement.executeQuery();
+		if (set.next()) {
+			match = true;
+		}
+		
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+	return match ;
+	}
+
+	public boolean verifyUserNamePassword(String userName, String password) {
+	boolean match = false;
+	String sql = "SELECT * FROM user WHERE username=? AND password=?;";
+	try {
+		PreparedStatement statement = connection.prepareStatement(sql);
+		statement.setString(1, userName);
+		statement.setString(2, password);
+		
+		ResultSet set = statement.executeQuery();
+		if (set.next()) {
+			match = true;
+		}
+		
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+	return match ;
+	}
+	
+	@Override
+	public boolean updateUser(User user) {
+		boolean updateSuccess = false;
+		
+		
+		
+		return updateSuccess;
+	}
 	
 	@Override
 	public void createSession(UserSession session) {

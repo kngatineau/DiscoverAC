@@ -27,6 +27,7 @@ public interface ApplicationService {
 	public void createUser(User user);
 	public User getUser(UUID userId);
 	public boolean verifyUser(UUID userId);
+	public boolean updateUser(User user);
 	
 	// To Manage User Sessions
 	public void createSession(UserSession session);

@@ -77,7 +77,7 @@ public class LoginServlet extends HttpServlet {
 		
 //		AdminRole.createUser(user);
 		
-		boolean permissionGranted = loginDB.verifyUser(userName, password);
+		boolean permissionGranted = loginDB.verifyUserNamePassword(userName, password);
 		
 		if (permissionGranted) {
 			System.out.println("User authentication approved");
