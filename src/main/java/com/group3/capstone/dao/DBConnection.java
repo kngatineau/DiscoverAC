@@ -5,42 +5,46 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DBConnection {
-	 
-	public static Connection getConnectionToDatabase() {
-	        
-		Connection connection = null;
+
+	private static DBConnection dbConnection = new DBConnection();
+	private static Connection connection = dbConnection.getConnectionToDatabase();
+	
+	private DBConnection() {
 		final String dbName = "DiscoverAc";
 		
 		final String dbUrl = "jdbc:mysql://cst8288capstone.mysql.database.azure.com:3306/"
-										+ dbName +"?useSSL=true&requireSSL=false&autoReconnect=true";
+				+ dbName +"?useSSL=true&requireSSL=false&autoReconnect=true";
 		
-	    final String dbUser = "Group3@cst8288capstone";
-	    final String dbPassword = "AlgonquinCP2022Winter";
-	        
+		final String dbUser = "Group3@cst8288capstone";
+		final String dbPassword = "AlgonquinCP2022Winter";
+		
 		System.out.println("Attempting to connect to database.");
 		
 		try {
-	        	//load driver class
-	    		Class.forName("com.mysql.cj.jdbc.Driver");
+			//load driver class
+			Class.forName("com.mysql.cj.jdbc.Driver");
 			
-	        	System.out.println("MySql JDBC Driver Registered!");
-	        	
-	        	//get hold of driver manager
-	        	connection = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
-	        
+			System.out.println("MySql JDBC Driver Registered!");
+			
+			//get hold of driver manager
+			connection = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
+			
 		}catch (ClassNotFoundException e) {
-	        	System.out.println("Where is your MySqlJDBC Driver?");
-	        	e.printStackTrace();
-	        }
-	            
-	       catch(SQLException e) {
-	        	System.out.println("Conection failed! Check output console");
-	        	e.printStackTrace();
-	        }
-	        if (connection != null) {
-	        	System.out.print("Connection made to db!");
-	        }
-	       
-	        return connection;
-	    }
+			System.out.println("Where is your MySqlJDBC Driver?");
+			e.printStackTrace();
+		}
+		
+		catch(SQLException e) {
+			System.out.println("Conection failed! Check output console");
+			e.printStackTrace();
+		}
+		if (connection != null) {
+			System.out.print("Connection made to db!");
+		}
+	}
+	
+	public static synchronized Connection getConnectionToDatabase() {
+	        
+		return connection;
+	}
 }
