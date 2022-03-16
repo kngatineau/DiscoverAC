@@ -11,8 +11,8 @@ import java.util.UUID;
 
 import com.group3.capstone.beans.Bulletin;
 import com.group3.capstone.beans.Post;
-import com.group3.capstone.beans.User;
 import com.group3.capstone.services.ApplicationService;
+import com.group3.capstone.user.User;
 
 public class ApplicationDao implements ApplicationService {
 	

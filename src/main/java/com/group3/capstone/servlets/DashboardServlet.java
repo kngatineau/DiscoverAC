@@ -16,8 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.group3.capstone.beans.Post;
-import com.group3.capstone.beans.User;
 import com.group3.capstone.dao.ApplicationDao;
+import com.group3.capstone.user.User;
 
 /**
  * Servlet implementation class DashboardServlet

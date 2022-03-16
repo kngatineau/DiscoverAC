@@ -1,4 +1,4 @@
-package com.group3.capstone.beans;
+package com.group3.capstone.user;
 
 public class ReadOnlyRole {
 	

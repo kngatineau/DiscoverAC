@@ -1,4 +1,4 @@
-package com.group3.capstone.beans;
+package com.group3.capstone.user;
 
 //made concrete to test inserting users to database
 public class SignedUserRole {
