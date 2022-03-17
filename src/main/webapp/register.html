@@ -5,8 +5,9 @@
 <title>DiscoverAC - Register</title>
 </head>
 <body>
-<h1 style="margin:auto; text-align:center;">DiscoverAC</h1>
- <form action="RegisterServlet" method="post">
+<h1 style="margin:auto; text-align:center;color:green">DiscoverAC</h1>
+<h2 style="margin:auto; text-align:center;color:black">Register Account</h2>
+ <form action="register" method="post">
 	<table style="margin:auto;">
 		<tr>
 			<th id="title">First Name:</th>
@@ -29,14 +30,17 @@
 					<input type="text" name="password" id="password"></td>
 		 </tr>
 		 		 		<tr>
-			<th id="content">AC Email: </th>
+			<th id="content">Algonquin College Email: </th>
 				<td>
-					<input type="text" name="ac_email" id="ac_email"></td>
+					<input type="text" name="ac_email" id="ac_email">@algonquinlive.com</td>
 		 </tr>
 		 <tr>
 		 	<th colspan="2"><input type="submit" value="Register" id="register"></th>
 		 </tr>
 	</table>
 	</form>	
+	 <form action="login">
+    <button type="submit">Back to Login Page</button>
+ </form>
 </body>
 </html>

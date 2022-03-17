@@ -10,8 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.group3.capstone.beans.User;
 import com.group3.capstone.dao.ApplicationDao;
+import com.group3.capstone.user.User;
+import com.group3.capstone.usersession.UserSession;
 
 /**
  * Servlet implementation class LoginServlet
@@ -69,19 +70,28 @@ public class LoginServlet extends HttpServlet {
 //		user.setUserID();
 //		UUID test = user.getUserID();
 //		user.setEmail(email);
+		
+		UserSession session;
 
-		ApplicationDao AdminRole = new ApplicationDao();
+		ApplicationDao loginDB = new ApplicationDao();
 		
 //		AdminRole.createUser(user);
 		
-		boolean permissionGranted = AdminRole.verifyUser(userName, password);
+		boolean permissionGranted = loginDB.verifyUserNamePassword(userName, password);
 		
 		if (permissionGranted) {
 			System.out.println("User authentication approved");
-			user = AdminRole.getUser(userName);
+			user = loginDB.getUser(userName);
 			
-			// Redirect to new servlet instead of rewriting dashboard on the same page.
-			response.sendRedirect("dashboard?user="+user.getUserID().toString());
+			//Start new User Session
+			session = new UserSession();
+			session.setUser(user);
+			
+			loginDB.createSession(session);
+			
+			// Redirect to Dashboard servlet.
+//			response.sendRedirect("dashboard?user="+user.getUserID().toString());
+			response.sendRedirect("dashboard?session="+session.getSessionId().toString());
 			
 		}
 		else {
