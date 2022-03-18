@@ -21,7 +21,7 @@ public class Bulletin {
 		
 	}
 
-
+	
 	public UUID getBulletinID() {
 		return bulletinId;
 	}
