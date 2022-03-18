@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.group3.capstone.beans.Bulletin;
 import com.group3.capstone.beans.Post;
 import com.group3.capstone.dao.ApplicationDao;
 import com.group3.capstone.dao.ApplicationDaoProxy;
@@ -35,6 +36,7 @@ public class DashboardServlet extends HttpServlet {
 	String page = null;
 	ApplicationService appDB = new ApplicationDaoProxy();
 	//ApplicationDao appDB = new ApplicationDao();
+	
 	
 	//Initialize bulletinId with Algonquin College bulletin ID.
 	UUID bulletinId = UUID.fromString("930cc92d-8a1f-4ba5-90b6-4373d90d6e22");
@@ -117,10 +119,11 @@ public class DashboardServlet extends HttpServlet {
 		}
 		
 	}
+	
     public String populatePosts(List<Post> posts) throws SQLException{
+    
     	String htmlResults = "<h4 style='text-align:center; font-size: 25px;'>"
-    			//+ appDB.getBulletin(bulletinId).getBulletinName() +" Bulletin Board:</h4>"
-    			+ appDB.getBulletin(bulletinId) +" Bulletin Board:</h4>"
+    			+ appDB.getBulletin(bulletinId).getBulletinName() +" Bulletin Board:</h4>"
     			+ "<table style='border-collapse: collapse;'>"
         		+ "        <thead>\n"
         		+ "            <tr>\n"

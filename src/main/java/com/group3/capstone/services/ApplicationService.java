@@ -26,11 +26,19 @@ public interface ApplicationService {
 	//for Users
 	public void createUser(User user);
 	public User getUser(UUID userId);
+	public User getUser(String userName);
 	public boolean verifyUser(UUID userId);
 	public boolean updateUser(User user);
+	public boolean verifyUserEmail(String email);
 	
 	// To Manage User Sessions
 	public void createSession(UserSession session);
 	public UserSession getSession(UUID sessionId);
 	public boolean verifySession(UUID sessionId);
+	public boolean verifyUserNamePassword(String userName, String password);
+	public boolean verifyUserName(String userName);
+
+	
+
+	
 }

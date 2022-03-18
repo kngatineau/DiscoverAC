@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.group3.capstone.dao.ApplicationDao;
+import com.group3.capstone.dao.ApplicationDaoProxy;
+import com.group3.capstone.services.ApplicationService;
 import com.group3.capstone.user.User;
 
 /**
@@ -20,7 +22,8 @@ import com.group3.capstone.user.User;
 @WebServlet("/profile")
 public class ProfileServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	ApplicationDao dao = new ApplicationDao();
+	ApplicationService dao = new ApplicationDaoProxy();
+	//ApplicationDao dao = new ApplicationDao();
 	User user;
 	UUID sessionId = null;
 	boolean isEdit = false;

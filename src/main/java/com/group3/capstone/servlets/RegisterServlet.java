@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.group3.capstone.dao.ApplicationDao;
+import com.group3.capstone.dao.ApplicationDaoProxy;
+import com.group3.capstone.services.ApplicationService;
 import com.group3.capstone.user.User;
 import com.group3.capstone.usersession.UserSession;
 
@@ -20,7 +22,8 @@ import com.group3.capstone.usersession.UserSession;
 @WebServlet("/register")
 public class RegisterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	ApplicationDao registerDB = new ApplicationDao();
+	ApplicationService registerDB = new ApplicationDaoProxy();
+	//ApplicationDao registerDB = new ApplicationDao();
        
     /**
      * @see HttpServlet#HttpServlet()

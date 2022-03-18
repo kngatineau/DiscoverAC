@@ -57,6 +57,8 @@ public class ApplicationDao implements ApplicationService {
 			while (set.next()) {
 				//Retrieve bulletin if exists.
 				retrievedBulletin = new Bulletin(UUID.fromString(set.getString("bulletinId")), set.getString("bulletinName"));
+				String test = retrievedBulletin.getBulletinName();
+				System.out.println(test +"TTtttt");
 			}
 		}catch (SQLException exception) {
 			exception.printStackTrace();	

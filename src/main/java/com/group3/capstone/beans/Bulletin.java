@@ -71,12 +71,12 @@ public class Bulletin {
 		this.checkBulletinId = checkBulletinId;
 	}
 
-
+	
 	public List<Post> getPostRegistry() {
 		return postRegistry;
 	}
 
-
+	
 	public void setPostRegistry(List<Post> postRegistry) {
 		this.postRegistry = postRegistry;
 	}

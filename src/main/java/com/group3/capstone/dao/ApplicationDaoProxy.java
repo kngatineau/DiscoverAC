@@ -39,43 +39,59 @@ public class ApplicationDaoProxy implements ApplicationService {
 
 	@Override
 	public Post readPost(String id) {
-		// TODO Auto-generated method stub
-		return null;
+		return daoReal.readPost(id);
 	}
 
 	@Override
 	public void writePost(Post post) {
-		// TODO Auto-generated method stub
+		daoReal.writePost(post);
 		
 	}
 
 	@Override
 	public void deletePost(String id) {
-		// TODO Auto-generated method stub
+		daoReal.deletePost(id);
 		
 	}
 
 	@Override
 	public void createUser(User user) {
-		// TODO Auto-generated method stub
+		daoReal.createUser(user);
 		
 	}
 
 	@Override
 	public boolean verifyUser(UUID userId) {
-		// TODO Auto-generated method stub
-		return false;
+		return daoReal.verifyUser(userId);
 	}
 
 	@Override
 	public boolean updateUser(User user) {
-		// TODO Auto-generated method stub
-		return false;
+		return daoReal.updateUser(user);
 	}
 
 	@Override
 	public void createSession(UserSession session) {
-		// TODO Auto-generated method stub
-		
+		daoReal.createSession(session);
+	}
+
+	@Override
+	public User getUser(String userName) {
+		return daoReal.getUser(userName);
+	}
+
+	@Override
+	public boolean verifyUserNamePassword(String userName, String password) {
+		return daoReal.verifyUserNamePassword(userName, password);
+	}
+
+	@Override
+	public boolean verifyUserEmail(String email) {
+		return daoReal.verifyUserEmail(email);
+	}
+
+	@Override
+	public boolean verifyUserName(String userName) {
+		return daoReal.verifyUserName(userName);
 	}
 }

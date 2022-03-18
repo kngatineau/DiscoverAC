@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.group3.capstone.dao.ApplicationDao;
+import com.group3.capstone.dao.ApplicationDaoProxy;
+import com.group3.capstone.services.ApplicationService;
 import com.group3.capstone.user.User;
 import com.group3.capstone.usersession.UserSession;
 
@@ -72,8 +74,10 @@ public class LoginServlet extends HttpServlet {
 //		user.setEmail(email);
 		
 		UserSession session;
-
-		ApplicationDao loginDB = new ApplicationDao();
+		
+		//create proxy to stand in for dao
+		ApplicationService loginDB = new ApplicationDaoProxy();
+		//ApplicationDao loginDB = new ApplicationDao();
 		
 //		AdminRole.createUser(user);
 		
