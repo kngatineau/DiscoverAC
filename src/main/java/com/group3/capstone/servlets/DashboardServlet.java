@@ -1,6 +1,7 @@
 package com.group3.capstone.servlets;
 
 import java.io.BufferedReader;
+
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Writer;
@@ -55,14 +56,20 @@ public class DashboardServlet extends HttpServlet {
 		
 		// Check if sessionId is in an appropriate format.
 		Boolean sessionIdWrongFormat = false;
+
 		try {			
 			sessionId = UUID.fromString(request.getParameter("session"));
-			System.out.println("Session Id: "+sessionId.toString());
+			System.out.println("Session Id: "+ sessionId.toString());
 			
 		} catch (IllegalArgumentException | NullPointerException e) {
 			e.printStackTrace();
 			sessionIdWrongFormat = true;
 		}
+		
+		if (request.getParameter("profile") != null) {
+			
+			response.sendRedirect("profile?session=" + sessionId);
+		} else 
 		
 		// If sessionId is in in an inappropriate format, prompt user to login appropriately.
 		if (sessionIdWrongFormat) {
@@ -84,17 +91,23 @@ public class DashboardServlet extends HttpServlet {
 				System.out.println("User sesion exists");
 				session = appDB.getSession(sessionId);
 				user = session.getUser();
+	
+				
 				page = getHTMLString(request.getServletContext().getRealPath("/dashboard.html"));
 				page = MessageFormat.format(page, user.getFirstName(), user.getLastName());
 				
 				try {
 					// Write bulletin posts to page if posts exist.
 					page += populatePosts(appDB.getBulletinPosts(bulletinId));
+
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
-				
+			
 				writer.write(page);
+				writer.write(" <form method=\"get\">\r\n"
+						+ "    <button type=\"submit\" name=\"profile\">My Profile</button>\r\n"
+						+ " </form>");
 				
 			}
 
@@ -103,7 +116,7 @@ public class DashboardServlet extends HttpServlet {
 	}
     public String populatePosts(List<Post> posts) throws SQLException{
     	String htmlResults = "<h4 style='text-align:center; font-size: 25px;'>"
-    			+appDB.getBulletin(bulletinId).getBulletinName() +" Bulletin Board:</h4>"
+    			+ appDB.getBulletin(bulletinId).getBulletinName() +" Bulletin Board:</h4>"
     			+ "<table style='border-collapse: collapse;'>"
         		+ "        <thead>\n"
         		+ "            <tr>\n"
@@ -151,6 +164,9 @@ public class DashboardServlet extends HttpServlet {
 		String page = buffer.toString();
 
 		return page;
+	}
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	
 	}
 
 }
