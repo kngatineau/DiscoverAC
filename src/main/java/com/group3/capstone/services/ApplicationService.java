@@ -20,7 +20,7 @@ public interface ApplicationService {
 	public Post readPost(String id);
 	
 	public void writePost(Post post);
-	
+
 	public void deletePost(String id);
 	
 	//for Users
@@ -38,7 +38,4 @@ public interface ApplicationService {
 	public boolean verifyUserNamePassword(String userName, String password);
 	public boolean verifyUserName(String userName);
 
-	
-
-	
 }

@@ -38,8 +38,10 @@ public class DashboardServlet extends HttpServlet {
 	//ApplicationDao appDB = new ApplicationDao();
 	
 	
+	
 	//Initialize bulletinId with Algonquin College bulletin ID.
 	UUID bulletinId = UUID.fromString("930cc92d-8a1f-4ba5-90b6-4373d90d6e22");
+	
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -93,7 +95,7 @@ public class DashboardServlet extends HttpServlet {
 				
 			} else {
 				// Display Dashboard page if legitimate user session
-				System.out.println("User sesion exists");
+				System.out.println("User session exists");
 				session = appDB.getSession(sessionId);
 				user = session.getUser();
 	
@@ -121,7 +123,7 @@ public class DashboardServlet extends HttpServlet {
 	}
 	
     public String populatePosts(List<Post> posts) throws SQLException{
-    
+    	
     	String htmlResults = "<h4 style='text-align:center; font-size: 25px;'>"
     			+ appDB.getBulletin(bulletinId).getBulletinName() +" Bulletin Board:</h4>"
     			+ "<table style='border-collapse: collapse;'>"
