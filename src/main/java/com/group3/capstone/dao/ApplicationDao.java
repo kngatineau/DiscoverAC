@@ -97,7 +97,6 @@ public class ApplicationDao implements ApplicationService {
 		return postRegistry;
 	}	
 	
-	
 	//all CRUD operations for USER table
 	@Override
 	public void createUser(User user) {

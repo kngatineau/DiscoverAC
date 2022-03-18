@@ -82,13 +82,14 @@ public class LoginServlet extends HttpServlet {
 		if (permissionGranted) {
 			System.out.println("User authentication approved");
 			user = loginDB.getUser(userName);
-			
+				
 			//Start new User Session
 			session = new UserSession();
 			session.setUser(user);
 			
 			loginDB.createSession(session);
 			
+
 			// Redirect to Dashboard servlet.
 //			response.sendRedirect("dashboard?user="+user.getUserID().toString());
 			response.sendRedirect("dashboard?session="+session.getSessionId().toString());
