@@ -69,6 +69,9 @@ public class ApplicationDaoProxy implements ApplicationService {
 	public boolean updateUser(User user) {
 		return daoReal.updateUser(user);
 	}
+	public boolean updateUserPassword(User user, String newPassword) {
+		return daoReal.updateUserPassword(user, newPassword);
+	}
 
 	@Override
 	public void createSession(UserSession session) {

@@ -29,6 +29,7 @@ public interface ApplicationService {
 	public User getUser(String userName);
 	public boolean verifyUser(UUID userId);
 	public boolean updateUser(User user);
+	public boolean updateUserPassword(User user, String newPassword);
 	public boolean verifyUserEmail(String email);
 	
 	// To Manage User Sessions
