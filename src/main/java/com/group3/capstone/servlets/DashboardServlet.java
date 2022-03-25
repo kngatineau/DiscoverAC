@@ -69,8 +69,12 @@ public class DashboardServlet extends HttpServlet {
 			System.out.println("Session Id: "+ sessionId.toString());
 			
 		} catch (IllegalArgumentException | NullPointerException e) {
+			try {
+				sessionId = session.getSessionId();
+			} catch (IllegalArgumentException | NullPointerException f) {
 			e.printStackTrace();
 			sessionIdWrongFormat = true;
+		}
 		}
 		
 		if (request.getParameter("profile") != null) {
@@ -112,9 +116,6 @@ public class DashboardServlet extends HttpServlet {
 				}
 			
 				writer.write(page);
-				writer.write(" <form method=\"get\">\r\n"
-						+ "    <button type=\"submit\" name=\"profile\">My Profile</button>\r\n"
-						+ " </form>");
 				
 			}
 
@@ -124,7 +125,10 @@ public class DashboardServlet extends HttpServlet {
 	
     public String populatePosts(List<Post> posts) throws SQLException{
     	
-    	String htmlResults = "<h4 style='text-align:center; font-size: 25px;'>"
+    	String htmlResults = " <form method=\"get\" style='margin: auto; text-align: center;'>\r\n"
+						+ "    <button type=\"submit\" name=\"profile\">My Profile</button>\r\n"
+						+ " </form>" 		
+    			+ "<h4 style='text-align:center; font-size: 25px;'>"
     			+ appDB.getBulletin(bulletinId).getBulletinName() +" Bulletin Board:</h4>"
     			+ "<table style='border-collapse: collapse;'>"
         		+ "        <thead>\n"

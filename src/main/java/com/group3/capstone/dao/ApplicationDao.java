@@ -233,12 +233,39 @@ public class ApplicationDao implements ApplicationService {
 	@Override
 	public boolean updateUser(User user) {
 		boolean updateSuccess = false;
-		
-		
-		
-		return updateSuccess;
+		try {
+			Connection connection = DBConnection.getConnectionToDatabase();
+			PreparedStatement pstatement = connection.prepareStatement(
+				"UPDATE USER SET userName=?, firstName=?, lastName=? WHERE userId=?");
+			
+			pstatement.setString(1, user.getUserName());
+			pstatement.setString(2, user.getFirstName());
+			pstatement.setString(3, user.getLastName());
+			pstatement.setString(4,  user.getUserID().toString());
+			
+			pstatement.execute();
+	} catch (SQLException e) {
+		e.printStackTrace();
 	}
 	
+		return updateSuccess;
+	}
+	public boolean updateUserPassword(User user, String newPassword) {
+		boolean updateSuccess = false;
+		try {
+			Connection connection = DBConnection.getConnectionToDatabase();
+			PreparedStatement pstatement = connection.prepareStatement(
+				"UPDATE USER SET password=? WHERE userId=?");
+			pstatement.setString(1, newPassword);
+			pstatement.setString(2,  user.getUserID().toString());
+			
+			pstatement.execute();
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+	
+		return updateSuccess;
+	}
 	@Override
 	public void createSession(UserSession session) {
 		try {
@@ -293,5 +320,6 @@ public class ApplicationDao implements ApplicationService {
 	}
 	return match ;
 	}
+	
 	
 }
