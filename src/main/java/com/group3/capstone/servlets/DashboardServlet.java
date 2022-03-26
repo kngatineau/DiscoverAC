@@ -16,9 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.group3.capstone.beans.Bulletin;
 import com.group3.capstone.beans.Post;
-import com.group3.capstone.dao.ApplicationDao;
 import com.group3.capstone.dao.ApplicationDaoProxy;
 import com.group3.capstone.services.ApplicationService;
 import com.group3.capstone.user.User;
