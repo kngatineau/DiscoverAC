@@ -65,7 +65,9 @@ public class RegisterServlet extends HttpServlet {
 		String lastName = request.getParameter("last_name");
 		String userName = request.getParameter("username");
 		String password = request.getParameter("password");
-		String email = request.getParameter("ac_email")+"@algonquinlive.com";		
+		String email = request.getParameter("ac_email");
+		//changed for style purposes, if we cant trust user to inut AC email we can change back
+		//String email = request.getParameter("ac_email")+"@algonquinlive.com";		
 
 		boolean userNameExists = registerDB.verifyUserName(userName);
 		boolean userEmailExists = registerDB.verifyUserEmail(email);

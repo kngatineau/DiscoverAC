@@ -1,0 +1,94 @@
+@charset "ISO-8859-1";
+/*style for header*/
+.header{
+	background-color: #4bc87f;
+	margin:auto; 
+	text-align:center;
+	color: #29668b;
+}
+.footer{
+	background-color: #6eaff7;
+  	padding: 10px;
+  	text-align: center;
+  	color:#f0f87f;
+}
+.main{
+	background-color: #FBC85F;
+  	padding: 10px;
+  	text-align: center;
+  	color:#29668b;
+  	border-radius: 15px;
+  	border-style: solid;
+  	border-color: #29668b;
+  	margin-top: 30px;
+  	margin-bottom: 30px;
+  	margin-right: 50px;
+  	margin-left: 50px;	
+}
+.main_title{
+	margin:auto; 
+	text-align:center;
+	color:#6eaff7;	
+}
+
+.button{
+  background-color: #4bc87f;
+  border: solid;
+  border-color:#6eaff7;
+  color: #29668b;
+  padding: 16px 32px;
+  text-decoration: none;
+  margin: 4px 2px;
+  cursor: pointer;
+  text-align:center;
+  border-radius: 15px;
+}
+input[type=submit]{
+  background-color: #4bc87f;
+  border: solid;
+  border-color:#6eaff7;
+  color: #29668b;
+  padding: 16px 32px;
+  text-decoration: none;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 15px;
+  text-align:center;
+}
+
+input[type=submit]:hover{
+  background-color: #6eaff7;
+  border: solid;
+  border-color: #29668b;
+  color: #f0f87f;
+  padding: 16px 32px;
+  text-decoration: none;
+  margin: 4px 2px;
+  cursor: pointer;
+  text-align:center;
+  border-radius: 15px;
+}
+.button:hover{
+  background-color: #6eaff7;
+  border: solid;
+  border-color: #29668b;
+  color: #f0f87f;
+  padding: 16px 32px;
+  text-decoration: none;
+  margin: 4px 2px;
+  cursor: pointer;
+  text-align:center;
+  border-radius: 15px;
+}
+
+input[type=text]{
+  
+  border: solid;
+  border-color:#6eaff7;
+  padding: 16px 32px;
+  margin: 2px 2px;
+  border-radius: 15px;
+  
+}
+
+
