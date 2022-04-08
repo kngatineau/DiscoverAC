@@ -22,7 +22,7 @@
 <c:if test= "${requestScope.bulletin != null}">
 	<h4 style="text-align:center; font-size: 25px;">
 	${bulletin.getBulletinName()} Bulletin Board:</h4>
-	<table style='border-collapse: collapse;'>
+	<table style="border-collapse: collapse;">
 	<thead>
 		<tr>
 			<th>Title</th>
@@ -46,14 +46,13 @@
 		</tr>
 	</c:forEach>
 	</c:if>
+	</table>
 </c:if>
 
 </div>
 
 
-<div class="footer">
-  <p>Where Algonquin Discords are discovered</p>
-</div>
+<%@include file="footer.jsp" %>
 
 </body>
 </html>
