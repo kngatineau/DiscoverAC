@@ -7,7 +7,9 @@ import java.io.IOException;
 import java.io.Writer;
 import java.sql.SQLException;
 import java.text.MessageFormat;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.ServletException;
@@ -16,6 +18,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.group3.capstone.beans.Bulletin;
 import com.group3.capstone.beans.Post;
 import com.group3.capstone.dao.ApplicationDaoProxy;
 import com.group3.capstone.services.ApplicationService;
@@ -53,7 +56,7 @@ public class DashboardServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("Dashboard servlet initiated");
 //		//Temporary Face
-		page = getHTMLString(request.getServletContext().getRealPath("/dashboard.html"));
+//		page = getHTMLString(request.getServletContext().getRealPath("/dashboard.jsp"));
 //		response.getWriter().write(page);
 		
 		//User Entry Logic
@@ -100,20 +103,41 @@ public class DashboardServlet extends HttpServlet {
 				System.out.println("User session exists");
 				session = appDB.getSession(sessionId);
 				user = session.getUser();
+				
+				Bulletin bulletin = appDB.getBulletin(bulletinId);
+				List<Post> posts = appDB.getBulletinPosts(bulletinId);
+				
+				Map<String, String> authors = new HashMap<>();
+				User author;
+		    	for(Post post: posts) {
+		    		author = appDB.getUser(post.getAuthorId());
+		    		authors.put(post.getPostId().toString(), author.getUserName());
+		    	}
+				
+		    	// Pass Dashboard page objects to request object.
+				request.setAttribute("user", user);
+				request.setAttribute("bulletin", bulletin);
+				request.setAttribute("posts", posts);
+				request.setAttribute("authors", authors);
+				
+				
+				
+				request.getRequestDispatcher("/dashboard.jsp").forward(request, response);
+				
 	
-				
-				page = getHTMLString(request.getServletContext().getRealPath("/dashboard.html"));
-				page = MessageFormat.format(page, user.getFirstName(), user.getLastName());
-				
-				try {
-					// Write bulletin posts to page if posts exist.
-					page += populatePosts(appDB.getBulletinPosts(bulletinId));
-
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			
-				writer.write(page);
+				// Below now handled by JSP
+//				page = getHTMLString(request.getServletContext().getRealPath("/dashboard.html"));
+//				page = MessageFormat.format(page, user.getFirstName(), user.getLastName());
+//				
+//				try {
+//					// Write bulletin posts to page if posts exist.
+//					page += populatePosts(appDB.getBulletinPosts(bulletinId));
+//
+//				} catch (SQLException e) {
+//					e.printStackTrace();
+//				}
+//			
+//				writer.write(page);
 				
 			}
 
@@ -121,61 +145,62 @@ public class DashboardServlet extends HttpServlet {
 		
 	}
 	
-    public String populatePosts(List<Post> posts) throws SQLException{
-    	
-    	String htmlResults = " <form method=\"get\" style='margin: auto; text-align: center;'>\r\n"
-						+ "    <button type=\"submit\" name=\"profile\">My Profile</button>\r\n"
-						+ " </form>" 		
-    			+ "<h4 style='text-align:center; font-size: 25px;'>"
-    			+ appDB.getBulletin(bulletinId).getBulletinName() +" Bulletin Board:</h4>"
-    			+ "<table style='border-collapse: collapse;'>"
-        		+ "        <thead>\n"
-        		+ "            <tr>\n"
-        		+ "                <th>Title</th>\n"
-        		+ "                <th>Description</th>\n"
-        		+ "                <th>URL</th>\n"
-        		+ "                <th>Post Date</th>\n"
-        		+ "                <th>Author</th>\n"
-        		+ "            </tr>\n"
-        		+ "        </thead>\n";
-    	User user = null;
-    	
-    	
-    	for(Post post: posts) {
-    		user = appDB.getUser(post.getAuthorId());
-    		htmlResults += "<tr style='height:100px; background-color:#ccedc5; "
-    				+ "border-bottom: 10px solid white;'>\n"
-             		+ "			<td style='padding-right:20px;''>"+ post.getTitle()+"</td>\n"
-            		+ "			<td style='width:300px; padding-right:20px;'>"
-             		+ post.getDescription()+"</td>\n"
-            		+ "         <td style='padding-right:20px;'>"
-            		+ "  			<a href=\""+ post.getUrl()+"\">"+post.getUrl()+"</a>"
-             		+ "			</td>\n"
-             		+ "         <td style='padding-right:20px;'>"+ post.getPostDate().toString()+"</td>\n"
-                    + "         <td style='padding-right:20px;'>"+ user.getUserName()+"</td>\n"
-            		+ "</tr>";
-    	}
-    	
-        // Finally, add the closing html:
-        htmlResults += "        </tbody></table>";
-    	
-    	return htmlResults;
-    	
-    }
-
-	public String getHTMLString(String filePath) throws IOException {
-		BufferedReader reader = new BufferedReader(new FileReader(filePath));
-		String line = "";
-		StringBuffer buffer = new StringBuffer();
-		while ((line = reader.readLine()) != null) {
-			buffer.append(line);
-		}
-
-		reader.close();
-		String page = buffer.toString();
-
-		return page;
-	}
+//    public String populatePosts(List<Post> posts) throws SQLException{
+//    	
+//    	String htmlResults = " <form method=\"get\" style='margin: auto; text-align: center;'>\r\n"
+//						+ "    <button type=\"submit\" name=\"profile\">My Profile</button>\r\n"
+//						+ " </form>" 		
+//    			+ "<h4 style='text-align:center; font-size: 25px;'>"
+//    			+ appDB.getBulletin(bulletinId).getBulletinName() +" Bulletin Board:</h4>"
+//    			+ "<table style='border-collapse: collapse;'>"
+//        		+ "        <thead>\n"
+//        		+ "            <tr>\n"
+//        		+ "                <th>Title</th>\n"
+//        		+ "                <th>Description</th>\n"
+//        		+ "                <th>URL</th>\n"
+//        		+ "                <th>Post Date</th>\n"
+//        		+ "                <th>Author</th>\n"
+//        		+ "            </tr>\n"
+//        		+ "        </thead>\n";
+//    	User user = null;
+//    	
+//    	
+//    	for(Post post: posts) {
+//    		user = appDB.getUser(post.getAuthorId());
+//    		htmlResults += "<tr style='height:100px; background-color:#ccedc5; "
+//    				+ "border-bottom: 10px solid white;'>\n"
+//             		+ "			<td style='padding-right:20px;''>"+ post.getTitle()+"</td>\n"
+//            		+ "			<td style='width:300px; padding-right:20px;'>"
+//             		+ post.getDescription()+"</td>\n"
+//            		+ "         <td style='padding-right:20px;'>"
+//            		+ "  			<a href=\""+ post.getUrl()+"\">"+post.getUrl()+"</a>"
+//             		+ "			</td>\n"
+//             		+ "         <td style='padding-right:20px;'>"+ post.getPostDate().toString()+"</td>\n"
+//                    + "         <td style='padding-right:20px;'>"+ user.getUserName()+"</td>\n"
+//            		+ "</tr>";
+//    	}
+//    	
+//        // Finally, add the closing html:
+//        htmlResults += "        </tbody></table>";
+//    	
+//    	return htmlResults;
+//    	
+//    }
+//
+//	public String getHTMLString(String filePath) throws IOException {
+//		BufferedReader reader = new BufferedReader(new FileReader(filePath));
+//		String line = "";
+//		StringBuffer buffer = new StringBuffer();
+//		while ((line = reader.readLine()) != null) {
+//			buffer.append(line);
+//		}
+//
+//		reader.close();
+//		String page = buffer.toString();
+//
+//		return page;
+//	}
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
 	}
