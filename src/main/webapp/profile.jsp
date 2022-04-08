@@ -12,8 +12,8 @@
 <h1>DiscoverAC</h1>
 </div>
 
-<div class="main">
-<h2 >My Profile</h2>
+<div>
+<h2 class="titles">My Profile</h2>
 
 <h3>${message}</h3>
 
@@ -41,10 +41,10 @@
 				<a href='profile?session=${param.session}&name=changePass'>Change Password</a>
 				<br>
 				<br>
-				<input type="submit" value="Submit">
+				<input class="button" type="submit" value="Submit">
 			</form>
 			<form action='profile?session=${param.session}'>
-				<input type="submit" value="Back to Profile">
+				<input class="button" type="submit" value="Back to Profile">
 			</form>
 		</div> 
 	</c:when>
@@ -67,10 +67,10 @@
 				</tr>
 				</table>
 				<br>
-				<input type="submit" value="Submit">
+				<input class="button" type="submit" value="Submit">
 				</form>
 				<form action='profile?session=${param.session}'>
-					<input type="submit" value="Back to Profile">
+					<input class="button" type="submit" value="Back to Profile">
 			</form>
 		</div>
 	</c:when>
@@ -82,7 +82,7 @@
 		<br>${user.getEmail()}
 		<br><a href='profile?session=${param.session}&name=edit'>Edit</a>
 		<form method='get' action="dashboard?session=${param.session}">
-			<br><input type="submit" value="Back to Bulletin Board">
+			<br><input class="button" type="submit" value="Back to Bulletin Board">
 		</form>
 		</div>
 	</c:otherwise>
