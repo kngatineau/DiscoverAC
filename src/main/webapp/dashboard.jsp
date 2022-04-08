@@ -10,17 +10,17 @@
 
 <body  style="display: table; margin: 0 auto;text-align: left">
 <div class="header"style="text-align:center;">
-<h3 style="color:green">Welcome to DiscoverAC, ${user.getFirstName()} ${user.getLastName()}!</h3>
+<h3>Welcome to DiscoverAC, ${user.getFirstName()} ${user.getLastName()}!</h3>
 </div>
 
 <form method="get" style="margin: auto; text-align: center;">
-	<button type="submit" name="profile">My Profile</button>
+	<button class="button" type="submit" name="profile">My Profile</button>
 </form>
  		
 <div>
 
 <c:if test= "${requestScope.bulletin != null}">
-	<h4 style="text-align:center; font-size: 25px;">
+	<h4 class="titles">
 	${bulletin.getBulletinName()} Bulletin Board:</h4>
 	<table style="border-collapse: collapse;">
 	<thead>
@@ -35,7 +35,7 @@
 	
 	<c:if test= "${requestScope.posts != null}">
 	<c:forEach items="${requestScope.posts}" var="post" varStatus="loop">
-		<tr style="height:100px; background-color:#ccedc5; border-bottom: 10px solid white;">
+		<tr id="buletins">
 			<td style="padding-right:20px;"> ${post.getTitle()}()</td>
 		    <td style="width:300px; padding-right:20px;"> ${post.getDescription()} </td>
 		    <td style="padding-right:20px;">
