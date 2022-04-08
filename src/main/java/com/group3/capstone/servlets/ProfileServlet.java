@@ -68,6 +68,9 @@ public class ProfileServlet extends HttpServlet {
 //	
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		sessionId = UUID.fromString(request.getParameter("session"));
+		session = dao.getSession(sessionId);
+		
 		User user = dao.getSession(sessionId).getUser();
 		String userName = user.getUserName();
 		String currentPassword = request.getParameter("currentPass");
@@ -79,7 +82,7 @@ public class ProfileServlet extends HttpServlet {
 		
 		// if the 'current password' entry matches the password on file
 		if (permissionGranted) {
-			session = dao.getSession(sessionId);
+
 			// if the two 'new password' entries match
 			if (newPassword.equals(confirmPassword)) {
 			dao.updateUserPassword(user, newPassword);
