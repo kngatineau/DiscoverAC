@@ -89,7 +89,7 @@ public class LoginServlet extends HttpServlet {
 		}
 		else {
 			System.out.println("Access Denied");
-			String page = getHTMLString(request.getServletContext().getRealPath("/index.html"));
+			String page = getHTMLString(request.getServletContext().getRealPath("/index.jsp"));
 			
 			//Notify user, ideally would like alert to user to try again 
 			page += "<h3 style=\"margin:auto; text-align:center;color:red\">Wrong username or password. \nPlease try again!</h3>";
