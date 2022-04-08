@@ -4,9 +4,10 @@
 <html>
 <body>
 
-
+<div>
 <footer class="footer">
   <p>Where Algonquin Discords are discovered</p>
 </footer>
+</div>
 </body>
 </html>
