@@ -12,8 +12,8 @@
 <h1>DiscoverAC</h1>
 </div>
 
-<div class="main">
-<h2 >My Profile</h2>
+<div>
+<h2 class="titles">My Profile</h2>
 
 <h3>${message}</h3>
 
