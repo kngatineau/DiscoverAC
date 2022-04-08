@@ -124,10 +124,10 @@ public class ProfileServlet extends HttpServlet {
 					+ user.getUserName() + "'></td></tr><td></table>" 
 					+ user.getEmail() 
 					+ "</br><a href='profile?session=" + SID + "&name=changePass'>Change Password</a></br>"
-					+ "</br><input type=\"submit\" value=\"Submit\">"
+					+ "</br><input class=\"button\" type=\"submit\" value=\"Submit\">"
 					+ "</form>"
 					+ "<form action='profile?session=" + SID + "'>"
-					+ "<input type=\"submit\" value=\"Back to Profile\"></form></div>\r\n"; 
+					+ "<input class=\"button\" type=\"submit\" value=\"Back to Profile\"></form></div>\r\n"; 
 		// prints if the 'change password' link is clicked
 		} else if (request.getParameter("name") != null && request.getParameter("name").equals("changePass")) { 
 			userInfo =  "<div style='margin: auto; text-align: center;'><form method=\"post\">"
@@ -135,10 +135,10 @@ public class ProfileServlet extends HttpServlet {
 					+ "<tr><td><label for=\"currentPass\">Current Password: </label></td><td><input type=\"text\" id=\"currentPass\" name=\"currentPass\"><td></tr>"
 					+ "<tr><td><label for=\"newPass\">New Password: </label></td><td><input type=\"text\" id=\"newPass\" name=\"newPass\"><td></tr>"
 					+ "<tr><td><label for=\"confirmPass\">Confirm Password: </label></td><td><input type=\"text\" id=\"confirmPass\" name=\"confirmPass\"><td></tr>"
-					+ "</table></br><input type=\"submit\" value=\"Submit\">"
+					+ "</table></br><input class=\"button\" type=\"submit\" value=\"Submit\">"
 					+ "</form>"
 					+ "<form action='profile?session=" + SID + "'>"
-					+ "<input type=\"submit\" value=\"Back to Profile\"></form></div>\r\n"; 
+					+ "<input class=\"button\" type=\"submit\" value=\"Back to Profile\"></form></div>\r\n"; 
 			
 			// prints profile information otherwise
 		} else {
@@ -148,7 +148,7 @@ public class ProfileServlet extends HttpServlet {
 				+ "</br>" + user.getEmail()
 				+ "</br><a href='profile?session=" + SID + "&name=edit'>Edit</a>"		
 				+ "<form method='get' action=\"dashboard?session=" + SID + "\">"
-						+ "</br><input type=\"submit\" value=\"Back to Bulletin Board\"></form>\r\n"
+						+ "</br><input class=\"button\" type=\"submit\" value=\"Back to Bulletin Board\"></form>\r\n"
 				+ "</div>";
 		}
 		return userInfo;
