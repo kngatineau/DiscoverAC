@@ -1,12 +1,7 @@
 package com.group3.capstone.servlets;
 
-import java.io.BufferedReader;
-
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.Writer;
-import java.sql.SQLException;
-import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
