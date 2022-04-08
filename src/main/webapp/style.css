@@ -1,25 +1,28 @@
 @charset "ISO-8859-1";
+body{
+	font-family:Bahnschrift;
+}
 /*style for header*/
 .header{
-	background-color: #4bc87f;
+	background-color:#3A86FF;
 	margin:auto; 
 	text-align:center;
-	color: #29668b;
+	color: #ffbe0b;
 }
 .footer{
-	background-color: #6eaff7;
+	background-color: #3a86ff;
   	padding: 10px;
   	text-align: center;
-  	color:#f0f87f;
+  	color:#FFBE0B;
 }
 .main{
-	background-color: #FBC85F;
+	background-color: #FFBE0B;
   	padding: 10px;
   	text-align: center;
-  	color:#29668b;
+  	color:solid white;
   	border-radius: 15px;
   	border-style: solid;
-  	border-color: #29668b;
+  	border-color: #8338EC;
   	margin-top: 30px;
   	margin-bottom: 30px;
   	margin-right: 50px;
@@ -32,63 +35,57 @@
 }
 
 .button{
-  background-color: #4bc87f;
-  border: solid;
-  border-color:#6eaff7;
-  color: #29668b;
+   background-color: #3A86FF;
+  border-width: thin;
+  border-color: #FB5607;
+  color:#FFBE0B;
   padding: 16px 32px;
   text-decoration: none;
   margin: 4px 2px;
   cursor: pointer;
   text-align:center;
-  border-radius: 15px;
-}
-input[type=submit]{
-  background-color: #4bc87f;
-  border: solid;
-  border-color:#6eaff7;
-  color: #29668b;
-  padding: 16px 32px;
-  text-decoration: none;
-  margin: 4px 2px;
-  cursor: pointer;
-  border-radius: 15px;
-  text-align:center;
+  border-radius: 5px;
 }
 
-input[type=submit]:hover{
-  background-color: #6eaff7;
-  border: solid;
-  border-color: #29668b;
-  color: #f0f87f;
-  padding: 16px 32px;
-  text-decoration: none;
-  margin: 4px 2px;
-  cursor: pointer;
-  text-align:center;
-  border-radius: 15px;
-}
 .button:hover{
-  background-color: #6eaff7;
-  border: solid;
-  border-color: #29668b;
-  color: #f0f87f;
+  background-color: #FF006E;
+  border-width: thin;
+  border-color:#8338EC;
+  color: #FFBE0B;
   padding: 16px 32px;
   text-decoration: none;
   margin: 4px 2px;
   cursor: pointer;
   text-align:center;
-  border-radius: 15px;
+  border-radius: 5px;
 }
 
 input[type=text]{
   
   border: solid;
-  border-color:#6eaff7;
+  border-color:#3A86FF;
   padding: 16px 32px;
   margin: 2px 2px;
   border-radius: 15px;
   
 }
 
-
+#content{
+	color:#8338EC;
+}
+#bulletins{
+	height:100px; 
+	background-color:#FFBE0B; 
+	color: #8338EC;
+	border-bottom: 10px solid white;
+}
+th{
+	color:#8338EC;
+}
+.titles{
+	color:#FB5607;
+	text-align:center; 
+	font-size: 35px;
+	
+  	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px #8338EC;
+}
