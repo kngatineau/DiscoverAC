@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <html>
 <head>
 <meta charset="ISO-8859-1">
@@ -9,12 +11,13 @@
 <div class="header">
 <h1>DiscoverAC</h1>
 </div>
+
 <div class="main">
 <h2 >My Profile</h2>
 <h3>{0}</h3>
 </div>
-<div class="footer">
-  <p>Where Algonquin Discords are discovered</p>
-</div>
+
+
+<%@include file="footer.jsp" %>
 </body>
 </html>

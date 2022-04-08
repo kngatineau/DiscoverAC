@@ -51,9 +51,7 @@
 </div>
 
 
-<div class="footer">
-  <p>Where Algonquin Discords are discovered</p>
-</div>
+<%@include file="footer.jsp" %>
 
 </body>
 </html>
