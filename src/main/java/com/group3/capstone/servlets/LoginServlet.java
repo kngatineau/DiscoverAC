@@ -58,27 +58,17 @@ public class LoginServlet extends HttpServlet {
 		
 		
 		User user = null;
-//		String firstName = request.getParameter("first_name");
-//		String lastName = request.getParameter("last_name");
 		String userName = request.getParameter("username");
 		String password = request.getParameter("password");
-//		String email = request.getParameter("ac_email");		
 		user = new User();
-//		user.setFirstName(firstName);
-//		user.setLastName(lastName);
 		user.setPassword(password);
 		user.setUserName(userName);
-//		user.setUserID();
-//		UUID test = user.getUserID();
-//		user.setEmail(email);
 		
 		UserSession session;
 		
 		//create proxy to stand in for dao
 		ApplicationService loginDB = new ApplicationDaoProxy();
-		//ApplicationDao loginDB = new ApplicationDao();
-		
-//		AdminRole.createUser(user);
+
 		
 		boolean permissionGranted = loginDB.verifyUserNamePassword(userName, password);
 		
@@ -94,7 +84,6 @@ public class LoginServlet extends HttpServlet {
 			
 
 			// Redirect to Dashboard servlet.
-//			response.sendRedirect("dashboard?user="+user.getUserID().toString());
 			response.sendRedirect("dashboard?session="+session.getSessionId().toString());
 			
 		}
