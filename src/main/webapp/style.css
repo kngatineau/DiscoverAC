@@ -1,6 +1,8 @@
 @charset "ISO-8859-1";
+
 body{
-	font-family:Bahnschrift;
+	/*font-family:Bahnschrift;*/
+	font-family: 'Corben', Georgia, Times, serif;
 }
 /*style for header*/
 .header{
@@ -16,7 +18,8 @@ body{
   	color:#FFBE0B;
 }
 .main{
-	background-color: #ff8243;
+	background-image: linear-gradient(to bottom right, #ff8243, #FFBE0B);
+	font-family:Bahnschrift;
   	padding: 20px;
   	text-align: center;
   	color:solid white;
@@ -28,12 +31,13 @@ body{
   	margin-bottom: 30px;
   	margin-right: 50px;
   	margin-left: 50px;*/	
-  	width:300px
+  	width:450px
 }
 .main_title{
 	margin:auto; 
 	text-align:center;
-	color:#6eaff7;	
+	color:#6eaff7;
+	font-family: 'Corben', Georgia, Times, serif;	
 }
 
 .button{
@@ -47,6 +51,7 @@ body{
   cursor: pointer;
   text-align:center;
   border-radius: 5px;
+  font-family: 'Corben', Georgia, Times, serif;
 }
 
 .button:hover{
@@ -63,7 +68,7 @@ body{
 }
 
 input[type=text]{
-  
+  font-family: 'Nobile', Helvetica, Arial, sans-serif;
   border: solid;
   border-color:#3A86FF;
   padding: 16px 32px;
@@ -74,16 +79,18 @@ input[type=text]{
 
 #content{
 	color:#8338EC;
+	font-family: 'Corben', Georgia, Times, serif;
 }
 #bulletins{
 	height:100px; 
-	background-color: #df73ff;
+	background-color:#ff8243;
 	/*background-color:#FFBE0B; */
-	color:#FFBE0B;
-	border-bottom: 10px solid white;
-	
-	
+	color:#8338EC;
+	border-bottom: 20px solid white;
+	font-family: 'Nobile', Helvetica, Arial, sans-serif;
+	background-image: linear-gradient(to bottom right, #ff8243, #FFBE0B);
 }
+
 
 th{
 	color:#8338EC;
@@ -91,6 +98,13 @@ th{
 .titles{
 	color:#ff8243;
 	text-align:center; 
-	font-size: 35px;
+	font-size: 30px;
   	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px #3A86FF;
+}
+.profile_text{
+	margin: auto; 
+	color:#ff8243;
+	text-align: center;
+	
+	
 }

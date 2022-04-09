@@ -6,6 +6,10 @@
 <meta charset="ISO-8859-1">
 <title>DiscoverAC - Register</title>
 <link rel="stylesheet" href="style.css">
+<link href="http://fonts.googleapis.com/css?family=Corben:bold" rel="stylesheet" type="text/css">
+ <link href="http://fonts.googleapis.com/css?family=Nobile" rel="stylesheet" type="text/css">
+ <link rel="stylesheet" href="/css/font-awesome.css">
+
 </head>
 <body>
 <div class="header">
@@ -20,7 +24,7 @@
 <c:choose>
 	<%-- Prints if the 'Edit' link is clicked --%>
 	<c:when test="${(param.name!=null)&&(param.name=='edit')}">
-		<div style="margin: auto; text-align: center;">
+		<div class="profile_text">
 			<form method="get">
 				<table style="margin: auto; text-align: center;">
 				<tr>
@@ -46,11 +50,12 @@
 			<form action='profile?session=${param.session}'>
 				<input class="button" type="submit" value="Back to Profile">
 			</form>
+			<br>
 		</div> 
 	</c:when>
 	<%-- Prints if the 'Change password' link is clicked --%>
 	<c:when test="${(param.name!=null)&&(param.name=='changePass')}">
-		<div style="margin: auto; text-align: center;">
+		<div class="profile_text">
 			<form method="post">
 				<table style="margin: auto; text-align: center;">
 				<tr>
@@ -76,7 +81,7 @@
 	</c:when>
 	<%-- Prints profile info otherwise --%>	
 	<c:otherwise>
-		<div style="margin: auto; width: 300px; text-align: center">
+		<div class="profile_text">
 		${user.getFirstName()} ${user.getLastName()}
 		<br>${user.getUserName()}
 		<br>${user.getEmail()}
