@@ -11,22 +11,24 @@ body{
 }
 .footer{
 	background-color: #3a86ff;
-  	padding: 10px;
+  	padding: 20px;
   	text-align: center;
   	color:#FFBE0B;
 }
 .main{
-	background-color: #FFBE0B;
-  	padding: 10px;
+	background-color: #ff8243;
+  	padding: 20px;
   	text-align: center;
   	color:solid white;
   	border-radius: 15px;
   	border-style: solid;
   	border-color: #8338EC;
-  	margin-top: 30px;
+  	margin:auto;
+  	/*margin-top: 30px;
   	margin-bottom: 30px;
   	margin-right: 50px;
-  	margin-left: 50px;	
+  	margin-left: 50px;*/	
+  	width:300px
 }
 .main_title{
 	margin:auto; 
@@ -36,8 +38,8 @@ body{
 
 .button{
    background-color: #3A86FF;
-  border-width: thin;
-  border-color: #FB5607;
+  border:solid;
+  border-color:#8338EC;
   color:#FFBE0B;
   padding: 16px 32px;
   text-decoration: none;
@@ -48,8 +50,8 @@ body{
 }
 
 .button:hover{
-  background-color: #FF006E;
-  border-width: thin;
+  background-color:#ff8243;
+  border:solid;
   border-color:#8338EC;
   color: #FFBE0B;
   padding: 16px 32px;
@@ -75,17 +77,20 @@ input[type=text]{
 }
 #bulletins{
 	height:100px; 
-	background-color:#FFBE0B; 
-	color: #8338EC;
+	background-color: #df73ff;
+	/*background-color:#FFBE0B; */
+	color:#FFBE0B;
 	border-bottom: 10px solid white;
+	
+	
 }
+
 th{
 	color:#8338EC;
 }
 .titles{
-	color:#FB5607;
+	color:#ff8243;
 	text-align:center; 
 	font-size: 35px;
-	
-  	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px #8338EC;
+  	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px #3A86FF;
 }
