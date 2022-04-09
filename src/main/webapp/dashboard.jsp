@@ -6,6 +6,9 @@
 <meta charset="ISO-8859-1">
 <title>User Approved</title>
 <link rel="stylesheet" href="style.css">
+<link href="http://fonts.googleapis.com/css?family=Corben:bold" rel="stylesheet" type="text/css">
+ <link href="http://fonts.googleapis.com/css?family=Nobile" rel="stylesheet" type="text/css">
+ <link rel="stylesheet" href="/css/font-awesome.css">
 </head>
 
 <body  style="display: table; margin: 0 auto;text-align: left">
