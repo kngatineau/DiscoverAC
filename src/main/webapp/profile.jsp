@@ -42,12 +42,12 @@
 				</table>
 				${user.getEmail()}
 				<br>
-				<a href='profile?session=${param.session}&name=changePass'>Change Password</a>
+				<a href='profile?session=${session}&name=changePass'>Change Password</a>
 				<br>
 				<br>
 				<input class="button" type="submit" value="Submit">
 			</form>
-			<form action='profile?session=${param.session}'>
+			<form action='profile?session=${session}'>
 				<input class="button" type="submit" value="Back to Profile">
 			</form>
 			<br>
@@ -74,7 +74,7 @@
 				<br>
 				<input class="button" type="submit" value="Submit">
 				</form>
-				<form action='profile?session=${param.session}'>
+				<form action='profile?session=${session}'>
 					<input class="button" type="submit" value="Back to Profile">
 			</form>
 		</div>
@@ -85,8 +85,8 @@
 		${user.getFirstName()} ${user.getLastName()}
 		<br>${user.getUserName()}
 		<br>${user.getEmail()}
-		<br><a href='profile?session=${param.session}&name=edit'>Edit</a>
-		<form method='get' action="dashboard?session=${param.session}">
+		<br><a href='profile?session=${session}&name=edit'>Edit</a>
+		<form method='get' action="dashboard?session=${session}">
 			<br><input class="button" type="submit" value="Back to Bulletin Board">
 		</form>
 		</div>
