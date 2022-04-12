@@ -31,40 +31,17 @@ public class LogoutServlet extends HttpServlet {
 	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		// sets sessionId to equal the session parameter if not null
-//				if (request.getParameter("session") != null) {
-//					sessionId = UUID.fromString(request.getParameter("session"));
-//					SID = sessionId.toString();
-//				}
-//				//boolean to check if delete successfull
-//				boolean deleteSuccess = dao.deleteSession(sessionId);
-//				
-//				if (deleteSuccess) {
-//					System.out.println("user session ended");
-//				
-//					// Redirect to log in page servlet.
-//					response.sendRedirect("index");
-//				} else {
-//					
-//					System.out.println("Session unable to close");
-//					String page = getHTMLString(request.getServletContext().getRealPath("/logOutFooter.jsp"));
-//						
-//						//Notify user, ideally would like alert to user to try again 
-//						page += "<h3 style=\"margin:auto; text-align:center;color:red\">Log out failed. \nPlease try again!</h3>";
-//						PrintWriter writer = response.getWriter();
-//						writer.write(page);
-//					}
+
 		}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// sets sessionId to equal the session parameter if not null)
+		//sets sessionId to equal the session parameter if not null)
+		//gets sessionId to delete from db
 		if (request.getParameter("session") != null) {
 			sessionId = UUID.fromString(request.getParameter("session"));
 			SID = sessionId.toString();
 			System.out.println(SID);
 		}
-		//dao proxy to complete Delete operation on session
-						
 		
 		//boolean to check if delete successfull
 		boolean deleteSuccess = dao.deleteSession(sessionId);
@@ -79,11 +56,10 @@ public class LogoutServlet extends HttpServlet {
 			
 			System.out.println("Session unable to close");
 			String page = getHTMLString(request.getServletContext().getRealPath("/logOutFooter.jsp"));
-				
-				//Notify user, ideally would like alert to user to try again 
-				page += "<h3 style=\"margin:auto; text-align:center;color:red\">Log out failed. \nPlease try again!</h3>";
-				PrintWriter writer = response.getWriter();
-				writer.write(page);
+			//Notify user, ideally would like alert to user to try again 
+			page += "<h3 style=\"margin:auto; text-align:center;color:red\">Log out failed. \nPlease try again!</h3>";
+			PrintWriter writer = response.getWriter();
+			writer.write(page);
 			}
 	}
 	

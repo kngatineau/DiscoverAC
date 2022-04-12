@@ -36,8 +36,6 @@ public class ApplicationDao implements ApplicationService {
 
 	@Override
 	public void writePost(Post post) {
-		// TODO Auto-generated method stub
-
 		try {
 			//write insert query for new post
 			String sql = "INSERT INTO post (postId, title, description, url, postDate, bulletinId, authorId) values (?,?,?,?,?,?,?);";
@@ -49,7 +47,7 @@ public class ApplicationDao implements ApplicationService {
 			statement.setString(5, post.getPostDate().toString());
 			statement.setString(6, post.getBulletinId().toString());
 			statement.setString(7, post.getAuthorId().toString());
-			
+			//execute insert statement 
 			statement.execute();
 		}
 		catch(SQLException e) {
@@ -363,7 +361,5 @@ public class ApplicationDao implements ApplicationService {
 		}
 		return deleted;
 	}
-
-	
 	
 }
