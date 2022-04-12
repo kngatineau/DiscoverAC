@@ -3,6 +3,7 @@ package com.group3.capstone.servlets;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -54,13 +55,14 @@ public class PostServlet extends HttpServlet{
 		SID = request.getParameter("session");
 	}
 	
-	
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//get new post info that user inputted
+		//get text user inputted to create new post
 		String title = request.getParameter("discord_title");
 		String description = request.getParameter("discord_desc");
 		String url = request.getParameter("discord_url");
-		
 		//ensure all fields entered then make new post object
 		if (title !=null && description !=null && url !=null) {
 			//get session
@@ -79,6 +81,12 @@ public class PostServlet extends HttpServlet{
 			addPostDB.writePost(post);	
 			//send user back to dashboard
 			response.sendRedirect("dashboard?session=" + SID);
+		}else {
+			//if not required fields entered
+			String page = getHTMLString(request.getServletContext().getRealPath("/newPost.jsp"));
+			page += "<h3 style=\"margin:auto; text-align:center;color:red\">Please fill out all required fields</h3>";
+			PrintWriter writer = response.getWriter();
+			response.getWriter().write(page);
 		}
 	
 	}
@@ -97,6 +105,4 @@ public class PostServlet extends HttpServlet{
 		return page;
 	}
 	
-	
-
 }

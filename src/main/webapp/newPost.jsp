@@ -46,7 +46,7 @@
 		 
 		
 		 <tr>
-		 	<th colspan="2"><input type="submit" value="Add post" id="add_post"></th>
+		 	<th colspan="2"><input class="button" type="submit" value="Add post" id="add_post"></th>
 		 </tr>
 	</table>
 	</form>	
