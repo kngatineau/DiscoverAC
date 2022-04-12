@@ -89,6 +89,7 @@ public class DashboardServlet extends HttpServlet {
 				System.out.println("User session exists");
 				session = appDB.getSession(sessionId);
 				user = session.getUser();
+				UUID sessionIdToPass = session.getSessionId();
 				
 				Bulletin bulletin = appDB.getBulletin(bulletinId);
 				List<Post> posts = appDB.getBulletinPosts(bulletinId);
@@ -105,7 +106,9 @@ public class DashboardServlet extends HttpServlet {
 				request.setAttribute("bulletin", bulletin);
 				request.setAttribute("posts", posts);
 				request.setAttribute("authors", authors);
-								
+				//for logout function
+				request.setAttribute("session", sessionIdToPass);				
+				
 				request.getRequestDispatcher("/dashboard.jsp").forward(request, response);
 				
 			}

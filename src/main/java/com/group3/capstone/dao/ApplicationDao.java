@@ -281,6 +281,9 @@ public class ApplicationDao implements ApplicationService {
 			e.printStackTrace();
 		}
 	}
+	
+	
+
 
 	@Override
 	public UserSession getSession(UUID sessionId) {
@@ -320,6 +323,25 @@ public class ApplicationDao implements ApplicationService {
 	}
 	return match ;
 	}
+	
+	@Override
+	public boolean deleteSession(UUID sessionId) {
+		boolean deleted = false;
+		String sql = "DELETE FROM session WHERE sessionId = '"+sessionId.toString()+"';";
+		//String sql = "SELECT * FROM session WHERE sessionId = '"+sessionId.toString()+"';";
+		try {
+			PreparedStatement statement = connection.prepareStatement(sql);
+			int rowsAffected = statement.executeUpdate();
+			if (rowsAffected > 0) {
+				deleted = true;
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return deleted;
+	}
+
 	
 	
 }

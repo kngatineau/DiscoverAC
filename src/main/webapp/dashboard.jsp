@@ -55,7 +55,7 @@
 </div>
 
 
-<%@include file="footer.jsp" %>
+<%@include file="logOutFooter.jsp" %>
 
 </body>
 </html>
