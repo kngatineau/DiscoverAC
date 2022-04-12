@@ -83,12 +83,12 @@ input[type=text]{
 }
 #bulletins{
 	height:100px; 
-	background-color:#ff8243;
+	
 	/*background-color:#FFBE0B; */
-	color:#8338EC;
+	color: #ffffff;
 	border-bottom: 20px solid white;
 	font-family: 'Nobile', Helvetica, Arial, sans-serif;
-	background-image: linear-gradient(to bottom right, #ff8243, #FFBE0B);
+	background-image: linear-gradient(to bottom right, #8338EC, #ff8243);
 }
 
 

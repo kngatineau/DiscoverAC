@@ -33,4 +33,6 @@ public class UserSession {
 		this.sessionId = retrievedSession.getSessionId();
 		this.user = retrievedSession.getUser();
 	}
+	
+	
 }

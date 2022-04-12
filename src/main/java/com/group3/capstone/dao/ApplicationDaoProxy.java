@@ -97,4 +97,9 @@ public class ApplicationDaoProxy implements ApplicationService {
 	public boolean verifyUserName(String userName) {
 		return daoReal.verifyUserName(userName);
 	}
+
+	@Override
+	public boolean deleteSession(UUID sessionId) {
+		return daoReal.deleteSession(sessionId);
+	}
 }

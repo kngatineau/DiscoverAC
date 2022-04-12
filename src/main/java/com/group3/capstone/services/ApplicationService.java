@@ -39,4 +39,6 @@ public interface ApplicationService {
 	public boolean verifyUserNamePassword(String userName, String password);
 	public boolean verifyUserName(String userName);
 
+	public boolean deleteSession(UUID sessionId);
+
 }
