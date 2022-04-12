@@ -36,7 +36,7 @@ public class RegisterServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		String page = getHTMLString(request.getServletContext().getRealPath("/register.html"));
+		String page = getHTMLString(request.getServletContext().getRealPath("/register.jsp"));
 		response.getWriter().write(page);
 	}
 
