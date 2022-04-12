@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <html>
@@ -23,17 +22,17 @@
 		<tr>
 			<th>Title:</th>
 				<td>
-					<input type="text" name="discord_title" id="discord_title"></td>
+					<input type="text" name="discord_title" id="discord_title" required></td>
 		</tr>
 		<tr>
 			<th>Description: </th>
 				<td>
-					<input type="text" name="discord_desc" id="discord_desc"></td>
+					<input type="text" name="discord_desc" id="discord_desc" required></td>
 		 </tr>
 		 		<tr>
 			<th>URL: </th>
 				<td>
-					<input type="text" name="discord_url" id="discord_url"></td>
+					<input type="text" name="discord_url" id="discord_url" required></td>
 		 </tr>
 		 <tr>
 			<th> </th>
@@ -41,9 +40,6 @@
 					<input type="hidden" value="${session}" name="SID_post"></td>
 		 </tr>
 	
-		 
-		 
-		 
 		
 		 <tr>
 		 	<th colspan="2"><input class="button" type="submit" value="Add post" id="add_post"></th>
@@ -54,7 +50,6 @@
 			<br><input class="button" type="submit" value="Back to Bulletin Board">
 		</form>
  </div>
- 
 <%@include file="logOutFooter.jsp" %>
 </body>
 </html>

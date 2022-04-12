@@ -46,7 +46,7 @@
 					<input type="text" name="ac_email" id="ac_email" value="@algonquinlive.com"></td>
 		 </tr>
 		 <tr>
-		 	<th colspan="2"><input type="submit" value="Register" id="register"></th>
+		 	<th colspan="2"><input class="button" type="submit" value="Register" id="register"></th>
 		 </tr>
 	</table>
 	</form>	
