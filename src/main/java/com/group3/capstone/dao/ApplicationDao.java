@@ -5,6 +5,8 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -35,6 +37,24 @@ public class ApplicationDao implements ApplicationService {
 	@Override
 	public void writePost(Post post) {
 		// TODO Auto-generated method stub
+
+		try {
+			//write insert query for new post
+			String sql = "INSERT INTO post (postId, title, description, url, postDate, bulletinId, authorId) values (?,?,?,?,?,?,?);";
+			PreparedStatement statement = connection.prepareStatement(sql);
+			statement.setString(1, post.getPostId().toString());
+			statement.setString(2, post.getTitle() );
+			statement.setString(3, post.getDescription());
+			statement.setString(4, post.getUrl());
+			statement.setString(5, post.getPostDate().toString());
+			statement.setString(6, post.getBulletinId().toString());
+			statement.setString(7, post.getAuthorId().toString());
+			
+			statement.execute();
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+		}
 		
 	}
 
@@ -80,6 +100,8 @@ public class ApplicationDao implements ApplicationService {
 			
 			//execute query
 			ResultSet set = statement.executeQuery();
+			//for date formatting
+			
 			while (set.next()) {
 				//Add new post object if exists.
 				postRegistry.add(

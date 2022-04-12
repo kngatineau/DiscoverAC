@@ -12,6 +12,7 @@ public class Post {
 	private String url;
 	private Date postDate;
 	
+	
 
 	public Post(UUID postId, String title, String description, String url, Date postDate, UUID bulletinId,
 			UUID authorId) {

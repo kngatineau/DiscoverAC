@@ -63,11 +63,16 @@ public class DashboardServlet extends HttpServlet {
 			sessionIdWrongFormat = true;
 		}
 		}
-		
+	
+	
+		//send to profile page if profile button clicked
 		if (request.getParameter("profile") != null) {
 			
 			response.sendRedirect("profile?session=" + sessionId);
-		} else 
+		} 
+		
+		
+		else 
 		
 		// If sessionId is in in an inappropriate format, prompt user to login appropriately.
 		if (sessionIdWrongFormat) {
@@ -83,6 +88,7 @@ public class DashboardServlet extends HttpServlet {
 				System.out.println("User session does not exist");
 				// Redirect to login.
 				response.sendRedirect("login");
+				
 				
 			} else {
 				// Display Dashboard page if legitimate user session
@@ -111,6 +117,7 @@ public class DashboardServlet extends HttpServlet {
 				
 				request.getRequestDispatcher("/dashboard.jsp").forward(request, response);
 				
+				
 			}
 
 		}
@@ -118,7 +125,11 @@ public class DashboardServlet extends HttpServlet {
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
+		//if add a post button clicked
+		if (request.getParameter("addPost") != null) {
+			
+			response.sendRedirect("addPost?session=" + sessionId);
+			} 
 	}
 
 }

@@ -19,6 +19,10 @@
 <form method="get" style="margin: auto; text-align: center;">
 	<button class="button" type="submit" name="profile">My Profile</button>
 </form>
+
+<form method="post" style="margin: auto; text-align: center;">
+	<button class="button" type="submit" name="addPost">Add a Discord</button>
+</form>
  		
 <div>
 
