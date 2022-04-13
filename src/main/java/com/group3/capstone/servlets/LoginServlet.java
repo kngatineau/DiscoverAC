@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.group3.capstone.dao.ApplicationDaoProxy;
 import com.group3.capstone.services.ApplicationService;
@@ -33,24 +34,26 @@ public class LoginServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		String page = getHTMLString(request.getServletContext().getRealPath("/index.html"));
-		response.getWriter().write(page);
+		// Old method below, deprecated.
+//		String page = getHTMLString(request.getServletContext().getRealPath("/index.jsp"));
+//		response.getWriter().write(page);
+		request.getRequestDispatcher("/index.jsp").forward(request, response);
 	}
 
-	public String getHTMLString(String filePath) throws IOException {
-		BufferedReader reader = new BufferedReader(new FileReader(filePath));
-		String line = "";
-		StringBuffer buffer = new StringBuffer();
-		while ((line = reader.readLine()) != null) {
-			buffer.append(line);
-		}
-
-		reader.close();
-		String page = buffer.toString();
-
-		return page;
-	}
+		// Below method no longer necessary with JSP approach.
+//	public String getHTMLString(String filePath) throws IOException {
+//		BufferedReader reader = new BufferedReader(new FileReader(filePath));
+//		String line = "";
+//		StringBuffer buffer = new StringBuffer();
+//		while ((line = reader.readLine()) != null) {
+//			buffer.append(line);
+//		}
+//
+//		reader.close();
+//		String page = buffer.toString();
+//
+//		return page;
+//	}
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -64,7 +67,7 @@ public class LoginServlet extends HttpServlet {
 		user.setPassword(password);
 		user.setUserName(userName);
 		
-		UserSession session;
+//		UserSession session;
 		
 		//create proxy to stand in for dao
 		ApplicationService loginDB = new ApplicationDaoProxy();
@@ -76,25 +79,33 @@ public class LoginServlet extends HttpServlet {
 			System.out.println("User authentication approved");
 			user = loginDB.getUser(userName);
 				
-			//Start new User Session
-			session = new UserSession();
-			session.setUser(user);
+			// No need to rely on DB to track sessions if passing sessions directly.
+//			session = new UserSession();
+//			session.setUser(user);
+//			
+//			loginDB.createSession(session);
 			
-			loginDB.createSession(session);
+			//Start new User Session
+			HttpSession session = request.getSession();
 			
 
 			// Redirect to Dashboard servlet.
-			response.sendRedirect("dashboard?session="+session.getSessionId().toString());
+//			response.sendRedirect("dashboard?session="+session.getSessionId().toString());
+			request.setAttribute("logInError", false);
+			session.setAttribute("user", user);
+			request.getRequestDispatcher("/dashboard.jsp").forward(request, response);
 			
 		}
 		else {
 			System.out.println("Access Denied");
-			String page = getHTMLString(request.getServletContext().getRealPath("/index.jsp"));
+//			String page = getHTMLString(request.getServletContext().getRealPath("/index.jsp"));
 			
 			//Notify user, ideally would like alert to user to try again 
-			page += "<h3 style=\"margin:auto; text-align:center;color:red\">Wrong username or password. \nPlease try again!</h3>";
-			PrintWriter writer = response.getWriter();
-			writer.write(page);
+//			page += "<h3 style=\"margin:auto; text-align:center;color:red\">Wrong username or password. \nPlease try again!</h3>";
+//			PrintWriter writer = response.getWriter();
+//			writer.write(page);
+			request.setAttribute("logInError", true);
+			request.getRequestDispatcher("/index.jsp").forward(request, response);
 		}
 
 	}

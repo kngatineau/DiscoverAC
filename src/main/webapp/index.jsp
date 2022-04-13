@@ -14,6 +14,12 @@
 <h1>DiscoverAC</h1>
  </div>
  
+ <c:if test= "${logInError}">
+	 <div class="error">
+	 <h3 style="margin:auto; text-align:center; color:red">Wrong username or password. Please try again!</h3>
+	 </div>
+ </c:if>
+ 
  <div class="main">
  <form action="login" method="post">
 	<table style="margin:auto;">
