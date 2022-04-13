@@ -20,11 +20,11 @@ import com.group3.capstone.usersession.UserSession;
 @WebServlet("/logout")
 public class LogoutServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	ApplicationService dao = new ApplicationDaoProxy();
-	UserSession session;
-	User user;
-	UUID sessionId = null;
-	String SID;
+//	ApplicationService dao = new ApplicationDaoProxy();
+//	UserSession session;
+//	User user;
+//	UUID sessionId = null;
+//	String SID;
 	
 	public LogoutServlet() {
 		super();
@@ -35,46 +35,49 @@ public class LogoutServlet extends HttpServlet {
 		}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//sets sessionId to equal the session parameter if not null)
-		//gets sessionId to delete from db
-		if (request.getParameter("session") != null) {
-			sessionId = UUID.fromString(request.getParameter("session"));
-			SID = sessionId.toString();
-			System.out.println(SID);
-		}
+		// Session no longer managed by DB, therefore, below unnecessary
+//		//sets sessionId to equal the session parameter if not null)
+//		//gets sessionId to delete from db
+//		if (request.getParameter("session") != null) {
+//			sessionId = UUID.fromString(request.getParameter("session"));
+//			SID = sessionId.toString();
+//			System.out.println(SID);
+//		}
+//		
+//		//boolean to check if delete successfull
+//		boolean deleteSuccess = dao.deleteSession(sessionId);
+//		
+//		if (deleteSuccess) {
 		
-		//boolean to check if delete successfull
-		boolean deleteSuccess = dao.deleteSession(sessionId);
-		
-		if (deleteSuccess) {
 			System.out.println("user session ended");
 		
 			// Redirect to log in page servlet.
 			response.sendRedirect("index.jsp");
-			
-		} else {
-			
-			System.out.println("Session unable to close");
-			String page = getHTMLString(request.getServletContext().getRealPath("/logOutFooter.jsp"));
-			//Notify user, ideally would like alert to user to try again 
-			page += "<h3 style=\"margin:auto; text-align:center;color:red\">Log out failed. \nPlease try again!</h3>";
-			PrintWriter writer = response.getWriter();
-			writer.write(page);
-			}
-	}
+//			
+//		} else {
+//			
+//			System.out.println("Session unable to close");
+//			String page = getHTMLString(request.getServletContext().getRealPath("/logOutFooter.jsp"));
+//			//Notify user, ideally would like alert to user to try again 
+//			page += "<h3 style=\"margin:auto; text-align:center;color:red\">Log out failed. \nPlease try again!</h3>";
+//			PrintWriter writer = response.getWriter();
+//			writer.write(page);
+//			}
+//	}
 	
-	public String getHTMLString(String filePath) throws IOException {
-		BufferedReader reader = new BufferedReader(new FileReader(filePath));
-		String line = "";
-		StringBuffer buffer = new StringBuffer();
-		while ((line = reader.readLine()) != null) {
-			buffer.append(line);
-		}
-
-		reader.close();
-		String page = buffer.toString();
-
-		return page;
+//	public String getHTMLString(String filePath) throws IOException {
+//		BufferedReader reader = new BufferedReader(new FileReader(filePath));
+//		String line = "";
+//		StringBuffer buffer = new StringBuffer();
+//		while ((line = reader.readLine()) != null) {
+//			buffer.append(line);
+//		}
+//
+//		reader.close();
+//		String page = buffer.toString();
+//
+//		return page;
+			
 	}
 }
 	

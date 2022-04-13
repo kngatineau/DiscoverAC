@@ -74,7 +74,8 @@ public class PostServlet extends HttpServlet{
 			//get new post Id
 			UUID postId = UUID.randomUUID();
 			//set post date
-			Date postDate = new Date(1);
+			long currentTimeinMS=System.currentTimeMillis();  
+			Date postDate = new Date(currentTimeinMS);
 			//create new post with new data
 			Post post = new Post(postId, title, description, url, postDate, bulletinId, authorId);
 			//use dao object to write a new post 

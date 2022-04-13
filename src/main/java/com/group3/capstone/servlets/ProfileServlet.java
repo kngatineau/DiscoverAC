@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.group3.capstone.dao.ApplicationDaoProxy;
 import com.group3.capstone.services.ApplicationService;
@@ -23,7 +24,8 @@ import com.group3.capstone.usersession.UserSession;
 public class ProfileServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	ApplicationService dao = new ApplicationDaoProxy();
-	UserSession session;
+//	UserSession session;
+	HttpSession session = null;
 	User user;
 	UUID sessionId = null;
 	String message = "";
@@ -44,19 +46,23 @@ public class ProfileServlet extends HttpServlet {
 		// if the Submit button is pressed under the 'Edit' form
 		if (request.getParameter("uname") != null) {
 			updateUserInfo(request, response);
-			session = dao.getSession(sessionId);
-			response.sendRedirect("profile?session="+ session.getSessionId().toString());
+//			session = dao.getSession(sessionId);
+//			response.sendRedirect("profile?session="+ session.getSessionId().toString());
+//			response.sendRedirect("profile");
+			request.getRequestDispatcher("/profile.jsp").forward(request, response);
 		}
-		// sets sessionId to equal the session parameter if not null
-		if (request.getParameter("session") != null) {
-			sessionId = UUID.fromString(request.getParameter("session"));
-			SID = sessionId.toString();
-		}
+		session = request.getSession();
+//		// sets sessionId to equal the session parameter if not null
+//		if (request.getParameter("session") != null) {
+//			sessionId = UUID.fromString(request.getParameter("session"));
+//			SID = sessionId.toString();
+//		}
 		
-		User user = dao.getSession(sessionId).getUser();
+//		User user = dao.getSession(sessionId).getUser();
+		User user = (User) session.getAttribute("user");
 		
 		request.setAttribute("user", user);
-		request.setAttribute("session", SID);
+//		request.setAttribute("session", SID);
 						
 		request.getRequestDispatcher("/profile.jsp").forward(request, response);
 		
@@ -68,10 +74,13 @@ public class ProfileServlet extends HttpServlet {
 //	
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		sessionId = UUID.fromString(request.getParameter("session"));
-		session = dao.getSession(sessionId);
+//		sessionId = UUID.fromString(request.getParameter("session"));
+//		session = dao.getSession(sessionId);
+		session = request.getSession();
 		
-		User user = dao.getSession(sessionId).getUser();
+//		User user = dao.getSession(sessionId).getUser();
+		User user = (User) session.getAttribute("user");
+		
 		String userName = user.getUserName();
 		String currentPassword = request.getParameter("currentPass");
 		String newPassword = request.getParameter("newPass");
@@ -104,24 +113,24 @@ public class ProfileServlet extends HttpServlet {
 			request.setAttribute("name", "changePass");
 //			response.sendRedirect("profile?session="+ session.getSessionId().toString() + "&name=changePass");
 		}
-		request.setAttribute("session", session.getSessionId().toString());
+//		request.setAttribute("session", session.getSessionId().toString());
 		request.setAttribute("message", message);
 		request.getRequestDispatcher("/profile.jsp").forward(request, response);
 	}
 
-	public String getHTMLString(String filePath) throws IOException {
-		BufferedReader reader = new BufferedReader(new FileReader(filePath));
-		String line = "";
-		StringBuffer buffer = new StringBuffer();
-		while ((line = reader.readLine()) != null) {
-			buffer.append(line);
-		}
-
-		reader.close();
-		String page = buffer.toString();
-
-		return page;
-	}
+//	public String getHTMLString(String filePath) throws IOException {
+//		BufferedReader reader = new BufferedReader(new FileReader(filePath));
+//		String line = "";
+//		StringBuffer buffer = new StringBuffer();
+//		while ((line = reader.readLine()) != null) {
+//			buffer.append(line);
+//		}
+//
+//		reader.close();
+//		String page = buffer.toString();
+//
+//		return page;
+//	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
@@ -175,7 +184,10 @@ public class ProfileServlet extends HttpServlet {
 //	} 
 	protected void updateUserInfo(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		// method called when 'Submit' is pressed using the 'Edit' form
-		User user = dao.getSession(sessionId).getUser();
+
+		// User retrieval now from session object rather than DB.
+//		User user = dao.getSession(sessionId).getUser();
+		User user = (User) request.getSession().getAttribute("user");
 		user.setUserName(request.getParameter("uname"));
 		user.setFirstName(request.getParameter("fname"));
 		user.setLastName(request.getParameter("lname"));
