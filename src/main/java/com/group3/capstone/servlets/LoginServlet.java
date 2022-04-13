@@ -93,8 +93,7 @@ public class LoginServlet extends HttpServlet {
 //			response.sendRedirect("dashboard?session="+session.getSessionId().toString());
 			request.setAttribute("logInError", false);
 			session.setAttribute("user", user);
-			request.getRequestDispatcher("/dashboard.jsp").forward(request, response);
-			
+			response.sendRedirect("dashboard");
 		}
 		else {
 			System.out.println("Access Denied");
