@@ -19,7 +19,7 @@ import com.group3.capstone.usersession.UserSession;
 
 @WebServlet("/logout")
 public class LogoutServlet extends HttpServlet {
-//	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 //	ApplicationService dao = new ApplicationDaoProxy();
 //	UserSession session;
 //	User user;
