@@ -15,6 +15,13 @@
 <div class="header">
 <h1>DiscoverAC</h1>
 </div>
+
+ <c:if test= "${error}">
+	 <div class="error">
+	 <h3 style="margin:auto; text-align:center; color:red">Please fill out all required fields.</h3>
+	 </div>
+ </c:if>
+
 <div class="main">
 <h2 class="main_title">Add a Discord!</h2>
  <form method="post" action="addPost">
