@@ -43,7 +43,7 @@
 	<c:if test= "${requestScope.posts != null}">
 	<c:forEach items="${requestScope.posts}" var="post" varStatus="loop">
 		<tr id="bulletins">
-			<td style="padding-right:20px;"> ${post.getTitle()}()</td>
+			<td style="padding-right:20px;"> ${post.getTitle()}</td>
 		    <td style="width:300px; padding-right:20px;"> ${post.getDescription()} </td>
 		    <td style="padding-right:20px;">
 		    	<a href="${post.getUrl()}" > ${post.getUrl()} </a>
