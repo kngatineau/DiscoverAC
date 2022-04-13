@@ -36,23 +36,25 @@ public class RegisterServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		String page = getHTMLString(request.getServletContext().getRealPath("/register.jsp"));
-		response.getWriter().write(page);
+		// Updated below to use JSP approach.
+//		String page = getHTMLString(request.getServletContext().getRealPath("/register.jsp"));
+//		response.getWriter().write(page);
+		request.getRequestDispatcher("register.jsp").forward(request, response);
 	}
 
-	public String getHTMLString(String filePath) throws IOException {
-		BufferedReader reader = new BufferedReader(new FileReader(filePath));
-		String line = "";
-		StringBuffer buffer = new StringBuffer();
-		while ((line = reader.readLine()) != null) {
-			buffer.append(line);
-		}
-
-		reader.close();
-		String page = buffer.toString();
-
-		return page;
-	}
+//	public String getHTMLString(String filePath) throws IOException {
+//		BufferedReader reader = new BufferedReader(new FileReader(filePath));
+//		String line = "";
+//		StringBuffer buffer = new StringBuffer();
+//		while ((line = reader.readLine()) != null) {
+//			buffer.append(line);
+//		}
+//
+//		reader.close();
+//		String page = buffer.toString();
+//
+//		return page;
+//	}
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -66,23 +68,26 @@ public class RegisterServlet extends HttpServlet {
 		String userName = request.getParameter("username");
 		String password = request.getParameter("password");
 		String email = request.getParameter("ac_email");
-		//changed for style purposes, if we cant trust user to inut AC email we can change back
+		//changed for style purposes, if we can't trust user to input AC email we can change back
 		//String email = request.getParameter("ac_email")+"@algonquinlive.com";		
 
 		boolean userNameExists = registerDB.verifyUserName(userName);
 		boolean userEmailExists = registerDB.verifyUserEmail(email);
+		request.setAttribute("userNameExists", userNameExists);
+		request.setAttribute("userEmailExists", userEmailExists);
 		
 		if (userNameExists|userEmailExists) {
 			System.out.println("user already exists");
-			String page = getHTMLString(request.getServletContext().getRealPath("/register.html"));
+//			String page = getHTMLString(request.getServletContext().getRealPath("/register.html"));
 			
 			//Notify user
-			if (userNameExists) page += "<h3 style=\"margin:auto; text-align:center;color:red\">UserName already exists.</h3>";
-			if (userEmailExists) page += "<h3 style=\"margin:auto; text-align:center;color:red\">An account already exists with that email address.</h3>";
+//			if (userNameExists) page += "<h3 style=\"margin:auto; text-align:center;color:red\">UserName already exists.</h3>";
+//			if (userEmailExists) page += "<h3 style=\"margin:auto; text-align:center;color:red\">An account already exists with that email address.</h3>";			
+//			page += "<h3 style=\"margin:auto; text-align:center;color:red\">Please try again!</h3>";
+//			PrintWriter writer = response.getWriter();
+//			writer.write(page);
+			request.getRequestDispatcher("register.jsp").forward(request, response);
 
-			page += "<h3 style=\"margin:auto; text-align:center;color:red\">Please try again!</h3>";
-			PrintWriter writer = response.getWriter();
-			writer.write(page);
 			
 		} else {
 			System.out.println("New user registration approved.");
@@ -95,28 +100,36 @@ public class RegisterServlet extends HttpServlet {
 			
 			// create new user
 			registerDB.createUser(user);
-			// confirm new user in database
-			if (registerDB.verifyUser(user.getUserID())) {
-				System.out.println("New user registered.");
+			System.out.println("New user registered.");
+
+			// Pass user info to session
+			request.getSession().setAttribute("user", user);
+			
+			// send to dashboard page
+			response.sendRedirect("dashboard");
+			
+//			// confirm new user in database
+//			if (registerDB.verifyUser(user.getUserID())) {
 				
-				//Start new User Session to redirect user to dashboard page
-				UserSession session = new UserSession();
-				session.setUser(user);
+//				//Start new User Session to redirect user to dashboard page
+//				UserSession session = new UserSession();
+//				session.setUser(user);
 				
-				registerDB.createSession(session);
+//				registerDB.createSession(session);
+				
 				// send to dashboard page
-				response.sendRedirect("dashboard?session="+session.getSessionId().toString());
+//				response.sendRedirect("dashboard?session="+session.getSessionId().toString());
 		
-			} else {
-			
-			System.out.println("Database failure - new user not in database.");
-			String page = getHTMLString(request.getServletContext().getRealPath("/index.html"));
-			
-			//Notify user
-			page += "<h3 style=\"margin:auto; text-align:center;color:red\">System failure. Incident logged. \nAdmin will contact you at your Algonquin College email address.</h3>";
-			PrintWriter writer = response.getWriter();
-			writer.write(page);
-			}		
+//			} else {
+//			
+//			System.out.println("Database failure - new user not in database.");
+//			String page = getHTMLString(request.getServletContext().getRealPath("/index.html"));
+//			
+//			//Notify user
+//			page += "<h3 style=\"margin:auto; text-align:center;color:red\">System failure. Incident logged. \nAdmin will contact you at your Algonquin College email address.</h3>";
+//			PrintWriter writer = response.getWriter();
+//			writer.write(page);
+//			}		
 
 		}
 
