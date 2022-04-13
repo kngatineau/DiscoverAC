@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.group3.capstone.beans.Bulletin;
 import com.group3.capstone.beans.Post;
@@ -25,8 +26,9 @@ import com.group3.capstone.usersession.UserSession;
 @WebServlet("/dashboard")
 public class DashboardServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    UserSession session = null;
-    UUID sessionId = null;
+//    UserSession session = null;
+//    UUID sessionId = null;
+	HttpSession session = null;
 	User user = null;
 	String page = null;
 	ApplicationService appDB = new ApplicationDaoProxy();
@@ -47,78 +49,86 @@ public class DashboardServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("Dashboard servlet initiated");
 
-		
-		// Check if sessionId is in an appropriate format.
-		Boolean sessionIdWrongFormat = false;
-
-		try {			
-			sessionId = UUID.fromString(request.getParameter("session"));
-			System.out.println("Session Id: "+ sessionId.toString());
-			
-		} catch (IllegalArgumentException | NullPointerException e) {
-			try {
-				sessionId = session.getSessionId();
-			} catch (IllegalArgumentException | NullPointerException f) {
-			e.printStackTrace();
-			sessionIdWrongFormat = true;
-		}
-		}
-	
+		// Below no longer necessary
+//		// Check if sessionId is in an appropriate format.
+//		Boolean sessionIdWrongFormat = false;
+//
+//		try {			
+//			sessionId = UUID.fromString(request.getParameter("session"));
+//			System.out.println("Session Id: "+ sessionId.toString());
+//			
+//		} catch (IllegalArgumentException | NullPointerException e) {
+//			try {
+//				sessionId = session.getSessionId();
+//			} catch (IllegalArgumentException | NullPointerException f) {
+//			e.printStackTrace();
+//			sessionIdWrongFormat = true;
+//		}
+//		}
+		session = request.getSession();
+		user = (User) session.getAttribute("user");
 	
 		//send to profile page if profile button clicked
 		if (request.getParameter("profile") != null) {
 			
-			response.sendRedirect("profile?session=" + sessionId);
+			// Below Updated to JSP approach that do not rely on passiong SessionId.
+//			response.sendRedirect("profile?session=" + sessionId);
+			request.setAttribute("user", user);
+			response.sendRedirect("profile");
+			
 		} 
 		
 		
 		else 
 		
 		// If sessionId is in in an inappropriate format, prompt user to login appropriately.
-		if (sessionIdWrongFormat) {
+		if (user == null) {
+			request.setAttribute("logInError", true);
 			response.sendRedirect("login");
 			
 		} else {
-			// Check if user session created from login page.
-			Boolean sessionDoesNotExist = false;
+//			// Check if user session created from login page.
+//			Boolean sessionDoesNotExist = false;
+//			
+//
+//			sessionDoesNotExist = appDB.verifySession(sessionId);
+//			if (!sessionDoesNotExist) {
+//				System.out.println("User session does not exist");
+//				// Redirect to login.
+//				response.sendRedirect("login");
+//				
+//				
+//			} else {
 			
-
-			sessionDoesNotExist = appDB.verifySession(sessionId);
-			if (!sessionDoesNotExist) {
-				System.out.println("User session does not exist");
-				// Redirect to login.
-				response.sendRedirect("login");
+			// Display Dashboard page if legitimate user session
+			System.out.println("User session exists");
+//			session = appDB.getSession(sessionId);
+//			user = session.getUser();
+//			UUID sessionIdToPass = session.getSessionId();
+			
+			Bulletin bulletin = appDB.getBulletin(bulletinId);
+			List<Post> posts = appDB.getBulletinPosts(bulletinId);
+			
+			Map<String, String> authors = new HashMap<>();
+			User author;
+	    	for(Post post: posts) {
+	    		author = appDB.getUser(post.getAuthorId());
+	    		authors.put(post.getPostId().toString(), author.getUserName());
+	    		System.out.println(">");
+	    	}
+			
+	    	// Pass Dashboard page objects to request object.
+			session.setAttribute("user", user);
+			request.setAttribute("bulletin", bulletin);
+			request.setAttribute("posts", posts);
+			request.setAttribute("authors", authors);
+			//for logout function
+//			request.setAttribute("session", sessionIdToPass);				
+			
+			request.getRequestDispatcher("/dashboard.jsp").forward(request, response);
 				
 				
-			} else {
-				// Display Dashboard page if legitimate user session
-				System.out.println("User session exists");
-				session = appDB.getSession(sessionId);
-				user = session.getUser();
-				UUID sessionIdToPass = session.getSessionId();
-				
-				Bulletin bulletin = appDB.getBulletin(bulletinId);
-				List<Post> posts = appDB.getBulletinPosts(bulletinId);
-				
-				Map<String, String> authors = new HashMap<>();
-				User author;
-		    	for(Post post: posts) {
-		    		author = appDB.getUser(post.getAuthorId());
-		    		authors.put(post.getPostId().toString(), author.getUserName());
-		    	}
-				
-		    	// Pass Dashboard page objects to request object.
-				request.setAttribute("user", user);
-				request.setAttribute("bulletin", bulletin);
-				request.setAttribute("posts", posts);
-				request.setAttribute("authors", authors);
-				//for logout function
-				request.setAttribute("session", sessionIdToPass);				
-				
-				request.getRequestDispatcher("/dashboard.jsp").forward(request, response);
-				
-				
-			}
+//			}
 
 		}
 		
@@ -128,7 +138,7 @@ public class DashboardServlet extends HttpServlet {
 		//if add a post button clicked
 		if (request.getParameter("addPost") != null) {
 			
-			response.sendRedirect("addPost?session=" + sessionId);
+			response.sendRedirect("addPost");
 			} 
 	}
 
