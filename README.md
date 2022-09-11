@@ -1,3 +1,8 @@
-# CST8288_450_22W_G3_Capstone
-Test branching and pull request by HJ based on: https://stackoverflow.com/questions/52231262/how-to-push-a-new-branch-in-git
-Test commit by Aladah Moore
+# DiscoverAC
+## Introduction
+DiscoverAC is a web application written to host links to various Algonquin College Discord servers. This project was a capstone project and was the first java Servlet application we have written. We have learned a lot since this project and continue to learn on our journies as developers. 
+
+## Tools/Technologies
+JavaSE-17
+MySQL DBMS/MySQL JDBC Driver
+Apache Tomcat 9.0
